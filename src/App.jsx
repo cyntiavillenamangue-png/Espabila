@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 
 const COMUNIDADES = [
   "Todas", "Andalucía", "Aragón", "Asturias", "Baleares", "Canarias",
@@ -129,31 +129,134 @@ const GUIDES = [
   },
 ];
 
-function GuideCard({ guide, onClick }) {
+// Simple markdown renderer: **bold**, bullet lists, numbered lists
+function renderMarkdown(text) {
+  const lines = text.split("\n");
+  const elements = [];
+  let i = 0;
+  while (i < lines.length) {
+    const line = lines[i];
+    if (/^[\*\-] /.test(line)) {
+      const items = [];
+      while (i < lines.length && /^[\*\-] /.test(lines[i])) {
+        items.push(lines[i].replace(/^[\*\-] /, ""));
+        i++;
+      }
+      elements.push(
+        <ul key={i} style={{ margin: "6px 0", paddingLeft: "18px" }}>
+          {items.map((it, j) => <li key={j} style={{ marginBottom: "3px" }}>{parseBold(it)}</li>)}
+        </ul>
+      );
+    } else if (/^\d+\. /.test(line)) {
+      const items = [];
+      while (i < lines.length && /^\d+\. /.test(lines[i])) {
+        items.push(lines[i].replace(/^\d+\. /, ""));
+        i++;
+      }
+      elements.push(
+        <ol key={i} style={{ margin: "6px 0", paddingLeft: "18px" }}>
+          {items.map((it, j) => <li key={j} style={{ marginBottom: "3px" }}>{parseBold(it)}</li>)}
+        </ol>
+      );
+    } else if (line.trim() === "") {
+      elements.push(<div key={i} style={{ height: "6px" }} />);
+      i++;
+    } else {
+      elements.push(<p key={i} style={{ margin: "0 0 4px" }}>{parseBold(line)}</p>);
+      i++;
+    }
+  }
+  return elements;
+}
+
+function parseBold(text) {
+  const parts = text.split(/(\*\*[^*]+\*\*)/g);
+  return parts.map((part, i) =>
+    /^\*\*[^*]+\*\*$/.test(part)
+      ? <strong key={i}>{part.slice(2, -2)}</strong>
+      : part
+  );
+}
+
+function ApiKeyModal({ onSave }) {
+  const [key, setKey] = useState("");
+  return (
+    <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.85)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, padding: "20px" }}>
+      <div style={{ background: "#111", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "20px", padding: "36px", maxWidth: "420px", width: "100%", animation: "fadeIn 0.3s ease" }}>
+        <div style={{ fontSize: "2rem", marginBottom: "16px" }}>🔑</div>
+        <h2 style={{ margin: "0 0 10px", fontSize: "20px", color: "#fff", fontFamily: "'Syne', sans-serif" }}>API Key de Anthropic</h2>
+        <p style={{ margin: "0 0 20px", color: "#888", fontSize: "14px", lineHeight: 1.6 }}>
+          Para usar el chat con IA necesitas tu propia API key de Anthropic. Se guarda solo en tu navegador y nunca se envía a ningún servidor externo.
+        </p>
+        <input
+          type="password"
+          value={key}
+          onChange={e => setKey(e.target.value)}
+          onKeyDown={e => e.key === "Enter" && key.startsWith("sk-") && onSave(key)}
+          placeholder="sk-ant-..."
+          style={{ width: "100%", padding: "14px 16px", borderRadius: "12px", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.15)", color: "#fff", fontSize: "14px", fontFamily: "inherit", outline: "none", marginBottom: "12px", boxSizing: "border-box" }}
+          autoFocus
+        />
+        <button
+          onClick={() => key.startsWith("sk-") && onSave(key)}
+          disabled={!key.startsWith("sk-")}
+          style={{ width: "100%", padding: "14px", borderRadius: "12px", border: "none", background: key.startsWith("sk-") ? "#FF6B35" : "#333", color: "#fff", fontSize: "14px", fontWeight: "600", cursor: key.startsWith("sk-") ? "pointer" : "default", fontFamily: "inherit", transition: "background 0.2s" }}
+        >
+          Guardar y continuar
+        </button>
+        <p style={{ margin: "14px 0 0", color: "#555", fontSize: "12px", textAlign: "center" }}>
+          Obtén tu key en console.anthropic.com
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function GuideCard({ guide, completed, onClick }) {
   return (
     <button onClick={() => onClick(guide)} style={{
-      background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)",
+      background: completed ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.04)",
+      border: `1px solid ${completed ? guide.color + "44" : "rgba(255,255,255,0.08)"}`,
       borderRadius: "16px", padding: "24px", cursor: "pointer", textAlign: "left",
       transition: "all 0.2s ease", position: "relative", overflow: "hidden",
     }}
-      onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.08)"; e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.borderColor = guide.color + "55"; }}
-      onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.04)"; e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"; }}
+      onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.09)"; e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.borderColor = guide.color + "66"; }}
+      onMouseLeave={e => { e.currentTarget.style.background = completed ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.04)"; e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.borderColor = completed ? guide.color + "44" : "rgba(255,255,255,0.08)"; }}
     >
-      <div style={{ position: "absolute", top: 0, right: 0, width: "80px", height: "80px", background: guide.color + "15", borderRadius: "0 16px 0 80px" }} />
+      <div style={{ position: "absolute", top: 0, right: 0, width: "80px", height: "80px", background: guide.color + "18", borderRadius: "0 16px 0 80px" }} />
+      {completed && (
+        <div style={{ position: "absolute", top: "12px", right: "12px", background: guide.color, borderRadius: "50%", width: "22px", height: "22px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "12px" }}>✓</div>
+      )}
       <div style={{ fontSize: "2rem", marginBottom: "12px" }}>{guide.emoji}</div>
       <div style={{ fontSize: "10px", fontWeight: "700", letterSpacing: "2px", color: guide.color, textTransform: "uppercase", marginBottom: "6px" }}>{guide.tag}</div>
       <div style={{ fontSize: "16px", fontWeight: "600", color: "#fff", lineHeight: 1.3 }}>{guide.title}</div>
-      <div style={{ marginTop: "12px", fontSize: "12px", color: "#888" }}>{guide.steps.length} pasos →</div>
+      <div style={{ marginTop: "12px", fontSize: "12px", color: completed ? guide.color : "#888" }}>
+        {completed ? "Completada ✓" : `${guide.steps.length} pasos →`}
+      </div>
     </button>
   );
 }
 
-function GuideDetail({ guide, onBack }) {
+function GuideDetail({ guide, completed, onComplete, onBack }) {
   const [step, setStep] = useState(0);
+  const [celebrating, setCelebrating] = useState(false);
   const current = guide.steps[step];
+  const isLast = step === guide.steps.length - 1;
+
+  const handleComplete = () => {
+    setCelebrating(true);
+    onComplete(guide.id);
+    setTimeout(() => { setCelebrating(false); onBack(); }, 2000);
+  };
+
   return (
     <div style={{ animation: "fadeIn 0.3s ease" }}>
-      <button onClick={onBack} style={{ background: "none", border: "none", color: "#888", cursor: "pointer", fontSize: "14px", marginBottom: "24px", padding: 0 }}>← Volver</button>
+      {celebrating && (
+        <div style={{ position: "fixed", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", zIndex: 999, pointerEvents: "none" }}>
+          <div style={{ fontSize: "80px", animation: "celebrate 0.6s ease" }}>🎉</div>
+        </div>
+      )}
+      <button onClick={onBack} style={{ background: "none", border: "none", color: "#888", cursor: "pointer", fontSize: "14px", marginBottom: "24px", padding: 0, fontFamily: "inherit" }}>← Volver</button>
       <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "32px" }}>
         <span style={{ fontSize: "2rem" }}>{guide.emoji}</span>
         <div>
@@ -173,15 +276,21 @@ function GuideDetail({ guide, onBack }) {
       </div>
       <div style={{ display: "flex", gap: "12px", marginTop: "20px" }}>
         <button onClick={() => setStep(s => Math.max(0, s - 1))} disabled={step === 0} style={{ flex: 1, padding: "14px", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.12)", background: "transparent", color: step === 0 ? "#444" : "#fff", cursor: step === 0 ? "default" : "pointer", fontSize: "14px", fontFamily: "inherit" }}>← Anterior</button>
-        <button onClick={() => setStep(s => Math.min(guide.steps.length - 1, s + 1))} disabled={step === guide.steps.length - 1} style={{ flex: 1, padding: "14px", borderRadius: "12px", border: "none", background: step === guide.steps.length - 1 ? "#333" : guide.color, color: "#fff", cursor: step === guide.steps.length - 1 ? "default" : "pointer", fontSize: "14px", fontWeight: "600", fontFamily: "inherit" }}>Siguiente →</button>
+        {isLast ? (
+          <button onClick={completed ? onBack : handleComplete} style={{ flex: 1, padding: "14px", borderRadius: "12px", border: "none", background: completed ? "#2EC4B6" : guide.color, color: "#fff", cursor: "pointer", fontSize: "14px", fontWeight: "600", fontFamily: "inherit" }}>
+            {completed ? "Ya completada ✓" : "Marcar como completada"}
+          </button>
+        ) : (
+          <button onClick={() => setStep(s => s + 1)} style={{ flex: 1, padding: "14px", borderRadius: "12px", border: "none", background: guide.color, color: "#fff", cursor: "pointer", fontSize: "14px", fontWeight: "600", fontFamily: "inherit" }}>Siguiente →</button>
+        )}
       </div>
     </div>
   );
 }
 
-function ChatView({ comunidad }) {
+function ChatView({ comunidad, apiKey, onNeedKey }) {
   const [messages, setMessages] = useState([
-    { role: "assistant", content: `¡Hola! Soy tu asistente para aprender a ser adulto en España${comunidad !== "Todas" ? ` (${comunidad})` : ""}. Pregúntame sobre impuestos, nóminas, alquileres, becas, contratos, autónomos, jubilación, NIE… ¡lo que necesites! 💪` }
+    { role: "assistant", content: `¡Hola! Soy tu asistente para aprender a ser adulto en España${comunidad !== "Todas" ? ` (${comunidad})` : ""}. Pregúntame sobre impuestos, nóminas, alquileres, becas, contratos, autónomos, jubilación, NIE… ¡lo que necesites!` }
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -194,6 +303,7 @@ function ChatView({ comunidad }) {
   const send = async (text) => {
     const msg = text || input;
     if (!msg.trim() || loading) return;
+    if (!apiKey) { onNeedKey(); return; }
     const userMsg = { role: "user", content: msg };
     const newMessages = [...messages, userMsg];
     setMessages(newMessages);
@@ -202,37 +312,53 @@ function ChatView({ comunidad }) {
     try {
       const res = await fetch("https://api.anthropic.com/v1/messages", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": apiKey,
+          "anthropic-version": "2023-06-01",
+          "anthropic-dangerous-direct-browser-access": "true",
+        },
         body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
+          model: "claude-sonnet-4-5",
           max_tokens: 1000,
-          system: `Eres un asistente experto en trámites, impuestos, finanzas personales, educación, derechos laborales y gestiones administrativas en España, especialmente para jóvenes de la Generación Z.${comunidad !== "Todas" ? ` El usuario vive en ${comunidad}, ten en cuenta las particularidades de esa comunidad autónoma.` : ""} Explica de forma clara y cercana, sin tecnicismos. Usa ejemplos concretos con cifras. Responde siempre en español.`,
+          system: `Eres un asistente experto en trámites, impuestos, finanzas personales, educación, derechos laborales y gestiones administrativas en España, especialmente para jóvenes de la Generación Z.${comunidad !== "Todas" ? ` El usuario vive en ${comunidad}, ten en cuenta las particularidades de esa comunidad autónoma.` : ""} Explica de forma clara y cercana, sin tecnicismos. Usa ejemplos concretos con cifras cuando sea útil. Puedes usar **negrita** y listas con guiones para organizar la información. Responde siempre en español.`,
           messages: newMessages.map(m => ({ role: m.role, content: m.content }))
         })
       });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        if (res.status === 401) { onNeedKey(); return; }
+        throw new Error(err.error?.message || "Error de API");
+      }
       const data = await res.json();
       const reply = data.content?.map(b => b.text || "").join("") || "No pude responder, intenta de nuevo.";
       setMessages(prev => [...prev, { role: "assistant", content: reply }]);
-    } catch {
-      setMessages(prev => [...prev, { role: "assistant", content: "Error de conexión. Intenta de nuevo." }]);
+    } catch (e) {
+      setMessages(prev => [...prev, { role: "assistant", content: `Error: ${e.message}. Intenta de nuevo.` }]);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "calc(100vh - 240px)", minHeight: "400px" }}>
+    <div style={{ display: "flex", flexDirection: "column", height: "calc(100vh - 300px)", minHeight: "400px" }}>
       <div style={{ flex: 1, overflowY: "auto", paddingRight: "4px" }}>
         {messages.map((m, i) => (
           <div key={i} style={{ display: "flex", justifyContent: m.role === "user" ? "flex-end" : "flex-start", marginBottom: "14px" }}>
-            <div style={{ maxWidth: "80%", padding: "12px 16px", borderRadius: m.role === "user" ? "18px 18px 4px 18px" : "18px 18px 18px 4px", background: m.role === "user" ? "#FF6B35" : "rgba(255,255,255,0.07)", color: "#fff", fontSize: "14px", lineHeight: 1.6, border: m.role === "assistant" ? "1px solid rgba(255,255,255,0.1)" : "none", whiteSpace: "pre-wrap" }}>
-              {m.content}
+            {m.role === "assistant" && (
+              <div style={{ width: "28px", height: "28px", borderRadius: "50%", background: "#FF6B35", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "14px", marginRight: "8px", flexShrink: 0, marginTop: "2px" }}>E</div>
+            )}
+            <div style={{ maxWidth: "78%", padding: "12px 16px", borderRadius: m.role === "user" ? "18px 18px 4px 18px" : "18px 18px 18px 4px", background: m.role === "user" ? "#FF6B35" : "rgba(255,255,255,0.07)", color: "#fff", fontSize: "14px", lineHeight: 1.65, border: m.role === "assistant" ? "1px solid rgba(255,255,255,0.1)" : "none" }}>
+              {m.role === "assistant" ? renderMarkdown(m.content) : m.content}
             </div>
           </div>
         ))}
         {loading && (
-          <div style={{ display: "flex", gap: "6px", padding: "12px 16px", marginBottom: "14px" }}>
-            {[0,1,2].map(i => <div key={i} style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#666", animation: `bounce 1s ease ${i * 0.15}s infinite` }} />)}
+          <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "14px" }}>
+            <div style={{ width: "28px", height: "28px", borderRadius: "50%", background: "#FF6B35", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "14px" }}>E</div>
+            <div style={{ display: "flex", gap: "5px", padding: "12px 16px", background: "rgba(255,255,255,0.07)", borderRadius: "18px 18px 18px 4px", border: "1px solid rgba(255,255,255,0.1)" }}>
+              {[0, 1, 2].map(i => <div key={i} style={{ width: "7px", height: "7px", borderRadius: "50%", background: "#666", animation: `bounce 1s ease ${i * 0.15}s infinite` }} />)}
+            </div>
           </div>
         )}
         <div ref={bottomRef} />
@@ -240,13 +366,19 @@ function ChatView({ comunidad }) {
       {messages.length === 1 && (
         <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "14px" }}>
           {SUGGESTIONS.map(s => (
-            <button key={s} onClick={() => send(s)} style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "20px", padding: "8px 14px", color: "#ccc", fontSize: "12px", cursor: "pointer", fontFamily: "inherit" }}>{s}</button>
+            <button key={s} onClick={() => send(s)} style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "20px", padding: "8px 14px", color: "#ccc", fontSize: "12px", cursor: "pointer", fontFamily: "inherit", transition: "all 0.2s" }}
+              onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.1)"; e.currentTarget.style.color = "#fff"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.05)"; e.currentTarget.style.color = "#ccc"; }}
+            >{s}</button>
           ))}
         </div>
       )}
       <div style={{ display: "flex", gap: "10px" }}>
-        <input value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key === "Enter" && send()} placeholder="Pregúntame lo que quieras…" style={{ flex: 1, padding: "14px 18px", borderRadius: "14px", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)", color: "#fff", fontSize: "14px", fontFamily: "inherit", outline: "none" }} />
-        <button onClick={() => send()} disabled={loading || !input.trim()} style={{ padding: "14px 20px", borderRadius: "14px", border: "none", background: input.trim() ? "#FF6B35" : "#333", color: "#fff", cursor: input.trim() ? "pointer" : "default", fontSize: "16px", transition: "background 0.2s" }}>↑</button>
+        <input value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key === "Enter" && !e.shiftKey && send()} placeholder="Pregúntame lo que quieras…" style={{ flex: 1, padding: "14px 18px", borderRadius: "14px", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)", color: "#fff", fontSize: "14px", fontFamily: "inherit", outline: "none", transition: "border-color 0.2s" }}
+          onFocus={e => e.target.style.borderColor = "rgba(255,107,53,0.5)"}
+          onBlur={e => e.target.style.borderColor = "rgba(255,255,255,0.12)"}
+        />
+        <button onClick={() => send()} disabled={loading || !input.trim()} style={{ padding: "14px 20px", borderRadius: "14px", border: "none", background: input.trim() && !loading ? "#FF6B35" : "#2a2a2a", color: input.trim() && !loading ? "#fff" : "#555", cursor: input.trim() && !loading ? "pointer" : "default", fontSize: "16px", transition: "all 0.2s" }}>↑</button>
       </div>
     </div>
   );
@@ -257,58 +389,148 @@ export default function App() {
   const [comunidad, setComunidad] = useState("Todas");
   const [activeGuide, setActiveGuide] = useState(null);
   const [filterTag, setFilterTag] = useState("Todos");
+  const [search, setSearch] = useState("");
+  const [completed, setCompleted] = useState(() => {
+    try { return JSON.parse(localStorage.getItem("espabila_completed") || "[]"); } catch { return []; }
+  });
+  const [apiKey, setApiKey] = useState(() => localStorage.getItem("espabila_apikey") || "");
+  const [showApiModal, setShowApiModal] = useState(false);
+
+  const saveApiKey = (key) => {
+    localStorage.setItem("espabila_apikey", key);
+    setApiKey(key);
+    setShowApiModal(false);
+  };
+
+  const markComplete = useCallback((id) => {
+    setCompleted(prev => {
+      if (prev.includes(id)) return prev;
+      const next = [...prev, id];
+      localStorage.setItem("espabila_completed", JSON.stringify(next));
+      return next;
+    });
+  }, []);
 
   const tags = ["Todos", ...new Set(GUIDES.map(g => g.tag))];
-  const filtered = filterTag === "Todos" ? GUIDES : GUIDES.filter(g => g.tag === filterTag);
+
+  const filtered = GUIDES.filter(g => {
+    const matchTag = filterTag === "Todos" || g.tag === filterTag;
+    const q = search.toLowerCase();
+    const matchSearch = !q || g.title.toLowerCase().includes(q) || g.tag.toLowerCase().includes(q) || g.steps.some(s => s.title.toLowerCase().includes(q) || s.body.toLowerCase().includes(q));
+    return matchTag && matchSearch;
+  });
+
+  const progress = Math.round((completed.length / GUIDES.length) * 100);
 
   return (
     <div style={{ minHeight: "100vh", background: "#0a0a0f", color: "#fff", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Syne:wght@700;800&display=swap');
         * { box-sizing: border-box; }
         ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+        ::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 2px; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes bounce { 0%,80%,100% { transform: scale(0.8); opacity: 0.5; } 40% { transform: scale(1); opacity: 1; } }
+        @keyframes celebrate { 0% { transform: scale(0) rotate(-20deg); opacity:0; } 50% { transform: scale(1.3) rotate(10deg); opacity:1; } 100% { transform: scale(1) rotate(0); opacity:0; } }
         input::placeholder { color: #555; }
         select option { background: #1a1a1a; }
+        button { font-family: inherit; }
       `}</style>
-      <div style={{ maxWidth: "680px", margin: "0 auto", padding: "32px 20px 80px" }}>
-        <div style={{ marginBottom: "36px", animation: "fadeIn 0.4s ease" }}>
-          <div style={{ fontSize: "11px", fontWeight: "700", letterSpacing: "3px", color: "#FF6B35", textTransform: "uppercase", marginBottom: "8px" }}>Generación Z</div>
-          <h1 style={{ margin: "0 0 6px", fontFamily: "'Syne', sans-serif", fontSize: "clamp(28px, 6vw, 40px)", fontWeight: "800", lineHeight: 1.1 }}>
-            Aprende a ser<br /><span style={{ color: "#FF6B35" }}>adulto</span> en España
-          </h1>
-          <p style={{ margin: "10px 0 0", color: "#777", fontSize: "14px" }}>Todo lo que el cole no te enseñó · {GUIDES.length} guías</p>
+
+      {showApiModal && <ApiKeyModal onSave={saveApiKey} />}
+
+      <div style={{ maxWidth: "680px", margin: "0 auto", padding: "32px 20px 100px" }}>
+
+        {/* Header */}
+        <div style={{ marginBottom: "28px", animation: "fadeIn 0.4s ease" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+            <div>
+              <div style={{ fontSize: "11px", fontWeight: "700", letterSpacing: "3px", color: "#FF6B35", textTransform: "uppercase", marginBottom: "8px" }}>Generación Z</div>
+              <h1 style={{ margin: "0 0 6px", fontFamily: "'Syne', sans-serif", fontSize: "clamp(26px, 6vw, 40px)", fontWeight: "800", lineHeight: 1.1 }}>
+                Aprende a ser<br /><span style={{ color: "#FF6B35" }}>adulto</span> en España
+              </h1>
+              <p style={{ margin: "10px 0 0", color: "#666", fontSize: "14px" }}>Todo lo que el cole no te enseñó · {GUIDES.length} guías</p>
+            </div>
+            {/* Progress ring */}
+            <div style={{ textAlign: "center", flexShrink: 0 }}>
+              <svg width="60" height="60" viewBox="0 0 60 60">
+                <circle cx="30" cy="30" r="24" fill="none" stroke="rgba(255,255,255,0.07)" strokeWidth="5" />
+                <circle cx="30" cy="30" r="24" fill="none" stroke="#FF6B35" strokeWidth="5"
+                  strokeDasharray={`${2 * Math.PI * 24}`}
+                  strokeDashoffset={`${2 * Math.PI * 24 * (1 - progress / 100)}`}
+                  strokeLinecap="round"
+                  transform="rotate(-90 30 30)"
+                  style={{ transition: "stroke-dashoffset 0.5s ease" }}
+                />
+                <text x="30" y="35" textAnchor="middle" fill="#fff" fontSize="13" fontWeight="700" fontFamily="inherit">{progress}%</text>
+              </svg>
+              <div style={{ fontSize: "10px", color: "#555", marginTop: "4px" }}>{completed.length}/{GUIDES.length}</div>
+            </div>
+          </div>
         </div>
 
-        <div style={{ marginBottom: "28px" }}>
-          <label style={{ fontSize: "11px", color: "#666", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: "8px" }}>Tu comunidad autónoma</label>
-          <select value={comunidad} onChange={e => setComunidad(e.target.value)} style={{ width: "100%", padding: "12px 16px", borderRadius: "12px", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)", color: "#fff", fontSize: "14px", fontFamily: "inherit", outline: "none", cursor: "pointer" }}>
+        {/* Comunidad selector */}
+        <div style={{ marginBottom: "20px" }}>
+          <label style={{ fontSize: "11px", color: "#555", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: "8px" }}>Tu comunidad autónoma</label>
+          <select value={comunidad} onChange={e => setComunidad(e.target.value)} style={{ width: "100%", padding: "12px 16px", borderRadius: "12px", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)", color: "#fff", fontSize: "14px", fontFamily: "inherit", outline: "none", cursor: "pointer" }}>
             {COMUNIDADES.map(c => <option key={c} value={c}>{c}</option>)}
           </select>
         </div>
 
-        <div style={{ display: "flex", gap: "4px", marginBottom: "28px", background: "rgba(255,255,255,0.05)", padding: "4px", borderRadius: "14px" }}>
+        {/* Tabs */}
+        <div style={{ display: "flex", gap: "4px", marginBottom: "24px", background: "rgba(255,255,255,0.04)", padding: "4px", borderRadius: "14px" }}>
           {[{ id: "guias", label: "📚 Guías" }, { id: "chat", label: "💬 Pregunta a la IA" }].map(t => (
-            <button key={t.id} onClick={() => { setTab(t.id); setActiveGuide(null); }} style={{ flex: 1, padding: "12px", border: "none", borderRadius: "10px", background: tab === t.id ? "#FF6B35" : "transparent", color: tab === t.id ? "#fff" : "#888", fontWeight: tab === t.id ? "600" : "400", cursor: "pointer", fontSize: "14px", fontFamily: "inherit", transition: "all 0.2s ease" }}>{t.label}</button>
+            <button key={t.id} onClick={() => { setTab(t.id); setActiveGuide(null); }} style={{ flex: 1, padding: "12px", border: "none", borderRadius: "10px", background: tab === t.id ? "#FF6B35" : "transparent", color: tab === t.id ? "#fff" : "#777", fontWeight: tab === t.id ? "600" : "400", cursor: "pointer", fontSize: "14px", transition: "all 0.2s ease" }}>{t.label}</button>
           ))}
         </div>
 
         {tab === "guias" && (
           <div style={{ animation: "fadeIn 0.3s ease" }}>
             {activeGuide ? (
-              <GuideDetail guide={activeGuide} onBack={() => setActiveGuide(null)} />
+              <GuideDetail
+                guide={activeGuide}
+                completed={completed.includes(activeGuide.id)}
+                onComplete={markComplete}
+                onBack={() => setActiveGuide(null)}
+              />
             ) : (
               <>
+                {/* Search */}
+                <div style={{ position: "relative", marginBottom: "16px" }}>
+                  <span style={{ position: "absolute", left: "14px", top: "50%", transform: "translateY(-50%)", color: "#555", fontSize: "16px", pointerEvents: "none" }}>🔍</span>
+                  <input
+                    value={search}
+                    onChange={e => setSearch(e.target.value)}
+                    placeholder="Buscar guías…"
+                    style={{ width: "100%", padding: "12px 16px 12px 42px", borderRadius: "12px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "#fff", fontSize: "14px", fontFamily: "inherit", outline: "none", transition: "border-color 0.2s" }}
+                    onFocus={e => e.target.style.borderColor = "rgba(255,107,53,0.4)"}
+                    onBlur={e => e.target.style.borderColor = "rgba(255,255,255,0.1)"}
+                  />
+                  {search && (
+                    <button onClick={() => setSearch("")} style={{ position: "absolute", right: "14px", top: "50%", transform: "translateY(-50%)", background: "none", border: "none", color: "#555", cursor: "pointer", fontSize: "16px", padding: 0, lineHeight: 1 }}>×</button>
+                  )}
+                </div>
+
+                {/* Tag filters */}
                 <div style={{ display: "flex", gap: "8px", marginBottom: "20px", flexWrap: "wrap" }}>
                   {tags.map(t => (
-                    <button key={t} onClick={() => setFilterTag(t)} style={{ padding: "7px 16px", borderRadius: "20px", border: "1px solid", borderColor: filterTag === t ? "#FF6B35" : "rgba(255,255,255,0.12)", background: filterTag === t ? "#FF6B35" : "transparent", color: filterTag === t ? "#fff" : "#888", fontSize: "12px", cursor: "pointer", fontFamily: "inherit", transition: "all 0.2s" }}>{t}</button>
+                    <button key={t} onClick={() => setFilterTag(t)} style={{ padding: "7px 16px", borderRadius: "20px", border: "1px solid", borderColor: filterTag === t ? "#FF6B35" : "rgba(255,255,255,0.1)", background: filterTag === t ? "#FF6B35" : "transparent", color: filterTag === t ? "#fff" : "#777", fontSize: "12px", cursor: "pointer", transition: "all 0.2s", fontWeight: filterTag === t ? "600" : "400" }}>{t}</button>
                   ))}
                 </div>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "14px" }}>
-                  {filtered.map(g => <GuideCard key={g.id} guide={g} onClick={setActiveGuide} />)}
-                </div>
+
+                {filtered.length === 0 ? (
+                  <div style={{ textAlign: "center", padding: "60px 20px", color: "#555" }}>
+                    <div style={{ fontSize: "2.5rem", marginBottom: "12px" }}>🔎</div>
+                    <div style={{ fontSize: "16px" }}>No hay guías que coincidan</div>
+                    <button onClick={() => { setSearch(""); setFilterTag("Todos"); }} style={{ marginTop: "14px", background: "none", border: "1px solid rgba(255,255,255,0.15)", borderRadius: "20px", color: "#888", padding: "8px 18px", cursor: "pointer", fontSize: "13px", fontFamily: "inherit" }}>Limpiar filtros</button>
+                  </div>
+                ) : (
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "14px" }}>
+                    {filtered.map(g => (
+                      <GuideCard key={g.id} guide={g} completed={completed.includes(g.id)} onClick={setActiveGuide} />
+                    ))}
+                  </div>
+                )}
               </>
             )}
           </div>
@@ -316,7 +538,18 @@ export default function App() {
 
         {tab === "chat" && (
           <div style={{ animation: "fadeIn 0.3s ease" }}>
-            <ChatView comunidad={comunidad} />
+            {!apiKey && (
+              <div style={{ background: "rgba(255,107,53,0.1)", border: "1px solid rgba(255,107,53,0.25)", borderRadius: "14px", padding: "16px 20px", marginBottom: "20px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
+                <div style={{ color: "#ccc", fontSize: "14px" }}>🔑 Necesitas una API key para usar el chat</div>
+                <button onClick={() => setShowApiModal(true)} style={{ background: "#FF6B35", border: "none", borderRadius: "10px", color: "#fff", padding: "9px 16px", cursor: "pointer", fontSize: "13px", fontWeight: "600", whiteSpace: "nowrap" }}>Configurar</button>
+              </div>
+            )}
+            {apiKey && (
+              <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "12px" }}>
+                <button onClick={() => setShowApiModal(true)} style={{ background: "none", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "10px", color: "#555", padding: "6px 12px", cursor: "pointer", fontSize: "12px", fontFamily: "inherit" }}>🔑 Cambiar API key</button>
+              </div>
+            )}
+            <ChatView comunidad={comunidad} apiKey={apiKey} onNeedKey={() => setShowApiModal(true)} />
           </div>
         )}
       </div>
