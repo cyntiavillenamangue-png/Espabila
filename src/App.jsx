@@ -10,6 +10,7 @@ const COMUNIDADES = [
 const GUIDES = [
   {
     id: "renta", emoji: "📄", title: "Declaración de la Renta", color: "#FF6B35", tag: "Impuestos",
+    related: ["nomina", "autonomo"],
     steps: [
       { title: "¿Qué es la renta?", body: "El IRPF (Impuesto sobre la Renta de las Personas Físicas) es lo que pagas según tus ingresos anuales. Hacienda hace una estimación y tú corriges si pagaste de más o de menos." },
       { title: "¿Estoy obligado a declarar?", body: "Si ganaste más de 22.000€ de un pagador, o más de 15.000€ de varios pagadores, estás obligado. Por debajo puedes hacerla igualmente si te sale a devolver." },
@@ -20,6 +21,7 @@ const GUIDES = [
   },
   {
     id: "nomina", emoji: "💶", title: "Entender tu Nómina", color: "#2EC4B6", tag: "Finanzas",
+    related: ["renta", "laboral", "ss"],
     steps: [
       { title: "Salario bruto vs neto", body: "El bruto es lo que negocias. El neto es lo que ves en tu cuenta. La diferencia son las cotizaciones a la Seguridad Social y la retención del IRPF." },
       { title: "Cotizaciones a la SS", body: "Pagas un ~6,35% de tu salario bruto a la Seguridad Social. Esto te da derecho a sanidad, paro, jubilación y bajas. No es un impuesto, es una aportación a tu futuro." },
@@ -30,6 +32,7 @@ const GUIDES = [
   },
   {
     id: "alquiler", emoji: "🏠", title: "Alquilar un Piso", color: "#A663CC", tag: "Vivienda",
+    related: ["padron", "banco", "hipoteca"],
     steps: [
       { title: "El contrato de alquiler", body: "Por ley, la duración mínima es 5 años (7 si el arrendador es empresa). Antes de firmar, léelo entero. Fíjate en la fianza, el IPC y quién paga los suministros." },
       { title: "La fianza", body: "Es obligatoria por ley: equivale a 1 mes de renta. El propietario debe depositarla en el organismo autonómico. Te la deben devolver al salir si todo está bien." },
@@ -40,6 +43,7 @@ const GUIDES = [
   },
   {
     id: "ss", emoji: "🏥", title: "Seguridad Social", color: "#E63946", tag: "Gestiones",
+    related: ["nomina", "laboral", "autonomo"],
     steps: [
       { title: "Alta en la Seguridad Social", body: "Tu empresa te da de alta automáticamente cuando empiezas a trabajar. Si eres autónomo, debes darte de alta tú mismo en el régimen especial (RETA)." },
       { title: "Tu médico de cabecera", body: "Con el número de la SS puedes pedir tu tarjeta sanitaria en el centro de salud de tu zona. Es gratuita y te da acceso a toda la sanidad pública." },
@@ -50,6 +54,7 @@ const GUIDES = [
   },
   {
     id: "padron", emoji: "📋", title: "Padrón Municipal", color: "#F4A261", tag: "Gestiones",
+    related: ["alquiler", "nie", "ss"],
     steps: [
       { title: "¿Qué es el padrón?", body: "Es el registro de dónde vives. Empadronarte es obligatorio y gratis. Define qué ayuntamiento te da servicios: sanidad, cole, ayudas, etc." },
       { title: "Cómo empadronarse", body: "Ve al ayuntamiento con DNI y prueba de domicilio (contrato de alquiler o autorización del propietario). También se puede hacer online en muchos ayuntamientos." },
@@ -59,6 +64,7 @@ const GUIDES = [
   },
   {
     id: "banco", emoji: "💳", title: "Finanzas Personales", color: "#06D6A0", tag: "Finanzas",
+    related: ["jubilacion", "nomina", "alquiler"],
     steps: [
       { title: "Elige bien tu banco", body: "Compara comisiones de mantenimiento, transferencias y cajeros. Los bancos online (Revolut, N26) suelen tener mejores condiciones para jóvenes." },
       { title: "El fondo de emergencia", body: "Intenta tener entre 3 y 6 meses de gastos ahorrados en una cuenta separada. Es tu red de seguridad para imprevistos." },
@@ -69,6 +75,7 @@ const GUIDES = [
   },
   {
     id: "becas", emoji: "🎓", title: "Estudios y Becas", color: "#FFD166", tag: "Educación",
+    related: ["banco", "padron"],
     steps: [
       { title: "Beca general del MEC", body: "El Ministerio de Educación convoca cada año la beca general universitaria. Depende de tu renta familiar y tu expediente académico. La convocatoria suele salir en verano." },
       { title: "¿Cuánto puedo recibir?", body: "La beca tiene varios componentes: cuantía fija por renta, cuantía variable por expediente, exención de matrícula y ayuda al desplazamiento. Puedes recibir desde 300€ hasta más de 6.000€ anuales." },
@@ -79,6 +86,7 @@ const GUIDES = [
   },
   {
     id: "hipoteca", emoji: "🏗️", title: "Comprar una Vivienda", color: "#EF476F", tag: "Vivienda",
+    related: ["alquiler", "banco", "renta"],
     steps: [
       { title: "¿Cuánto necesito ahorrado?", body: "Los bancos financian como máximo el 80% del valor. Necesitas al menos el 20% del precio más un 10-12% extra para gastos. Para un piso de 200.000€, calcula unos 60.000€ mínimo." },
       { title: "Impuestos al comprar", body: "Vivienda nueva: IVA (10%) + AJD. Segunda mano: ITP (entre el 6% y el 10% según la CCAA). Son gastos que van encima del precio de venta." },
@@ -89,6 +97,7 @@ const GUIDES = [
   },
   {
     id: "laboral", emoji: "📝", title: "Contratos y Derechos Laborales", color: "#4CC9F0", tag: "Trabajo",
+    related: ["ss", "nomina", "autonomo"],
     steps: [
       { title: "Tipos de contrato", body: "Indefinido: sin fecha de fin. Temporal: solo para necesidades concretas. Fijo-discontinuo: para trabajos estacionales. Exige siempre que te den copia firmada del contrato." },
       { title: "Período de prueba", body: "Durante el período de prueba cualquiera puede rescindir sin indemnización. Dura máximo 6 meses para titulados y 2 meses para el resto (según convenio)." },
@@ -99,6 +108,7 @@ const GUIDES = [
   },
   {
     id: "autonomo", emoji: "🧾", title: "Autónomos y Freelance", color: "#F77F00", tag: "Impuestos",
+    related: ["renta", "ss", "banco"],
     steps: [
       { title: "Darte de alta", body: "Debes darte de alta en Hacienda (modelo 036 o 037) y en la Seguridad Social (RETA) antes de empezar a facturar." },
       { title: "La cuota de autónomos", body: "Desde 2023 hay cuotas por tramos de ingresos reales. Si ganas menos de 670€/mes, la cuota mínima es ~230€. La tarifa plana para nuevos autónomos es de 80€/mes el primer año." },
@@ -109,6 +119,7 @@ const GUIDES = [
   },
   {
     id: "jubilacion", emoji: "👴", title: "Pensión y Jubilación", color: "#7B9E87", tag: "Finanzas",
+    related: ["ss", "banco", "nomina"],
     steps: [
       { title: "¿Cómo funciona el sistema?", body: "En España la pensión pública es de reparto: los trabajadores de hoy pagan las pensiones de los jubilados de hoy. Tu futura pensión depende de cuánto y durante cuánto tiempo hayas cotizado." },
       { title: "Años cotizados necesarios", body: "Para la pensión completa necesitas 37 años y 3 meses cotizados (en 2025). Con menos años, la pensión se reduce. La edad legal de jubilación es 66 años y 8 meses actualmente." },
@@ -119,6 +130,7 @@ const GUIDES = [
   },
   {
     id: "nie", emoji: "🛂", title: "Extranjería y NIE", color: "#9B5DE5", tag: "Gestiones",
+    related: ["padron", "ss", "laboral"],
     steps: [
       { title: "¿Qué es el NIE?", body: "El NIE (Número de Identidad de Extranjero) es tu identificación fiscal en España si no eres ciudadano español. Lo necesitas para trabajar, abrir cuenta bancaria, alquilar, comprar o cualquier trámite oficial." },
       { title: "Cómo obtener el NIE", body: "Pide cita en la Comisaría de Policía o Extranjería. Necesitas: formulario EX-15, pasaporte original y copia, foto de carné, justificante del motivo (contrato, matrícula…) y pago de la tasa (modelo 790)." },
@@ -129,7 +141,50 @@ const GUIDES = [
   },
 ];
 
-// Simple markdown renderer: **bold**, bullet lists, numbered lists
+const TIPS = [
+  "💡 Pide siempre copia firmada de tu contrato el mismo día que lo firmes.",
+  "💡 La declaración de la renta tiene plazo hasta el 30 de junio — no la dejes para el último día.",
+  "💡 Guarda todas tus nóminas en una carpeta digital. Las necesitarás para pedir el paro.",
+  "💡 Si te cambian de domicilio, actualiza el padrón en menos de 3 meses para evitar problemas.",
+  "💡 El fondo de emergencia debería cubrir al menos 3 meses de tus gastos fijos.",
+  "💡 Como autónomo nuevo, tienes tarifa plana de 80€/mes el primer año en la SS.",
+  "💡 Revisa tu vida laboral al menos una vez al año para detectar errores de cotización.",
+  "💡 Antes de firmar un alquiler, haz fotos de cada habitación y envíalas por email al propietario.",
+];
+
+// --- Utilidades IRPF / SS ---
+function calcIRPF(bruto) {
+  const minPersonal = 5550;
+  const base = Math.max(0, bruto - minPersonal);
+  const tramos = [
+    [12450, 0.19], [20200, 0.24], [35200, 0.30],
+    [60000, 0.37], [300000, 0.45], [Infinity, 0.47],
+  ];
+  let tax = 0, prev = 0;
+  for (const [limite, tipo] of tramos) {
+    if (base <= prev) break;
+    tax += (Math.min(base, limite) - prev) * tipo;
+    prev = limite;
+  }
+  return tax;
+}
+
+function calcAutonomoCuota(netMensual) {
+  const tramos = [
+    [670, 230], [900, 260], [1125, 275], [1300, 294],
+    [1500, 314], [1700, 327], [1850, 340], [2030, 357],
+    [2330, 380], [Infinity, 405],
+  ];
+  for (const [hasta, cuota] of tramos) {
+    if (netMensual <= hasta) return cuota;
+  }
+  return 405;
+}
+
+const fmt = (n) => new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(n);
+const fmtPct = (n) => (n * 100).toFixed(1) + "%";
+
+// --- Markdown renderer ---
 function renderMarkdown(text) {
   const lines = text.split("\n");
   const elements = [];
@@ -138,76 +193,73 @@ function renderMarkdown(text) {
     const line = lines[i];
     if (/^[\*\-] /.test(line)) {
       const items = [];
-      while (i < lines.length && /^[\*\-] /.test(lines[i])) {
-        items.push(lines[i].replace(/^[\*\-] /, ""));
-        i++;
-      }
-      elements.push(
-        <ul key={i} style={{ margin: "6px 0", paddingLeft: "18px" }}>
-          {items.map((it, j) => <li key={j} style={{ marginBottom: "3px" }}>{parseBold(it)}</li>)}
-        </ul>
-      );
+      while (i < lines.length && /^[\*\-] /.test(lines[i])) { items.push(lines[i].replace(/^[\*\-] /, "")); i++; }
+      elements.push(<ul key={i} style={{ margin: "6px 0", paddingLeft: "18px" }}>{items.map((it, j) => <li key={j} style={{ marginBottom: "3px" }}>{parseBold(it)}</li>)}</ul>);
     } else if (/^\d+\. /.test(line)) {
       const items = [];
-      while (i < lines.length && /^\d+\. /.test(lines[i])) {
-        items.push(lines[i].replace(/^\d+\. /, ""));
-        i++;
-      }
-      elements.push(
-        <ol key={i} style={{ margin: "6px 0", paddingLeft: "18px" }}>
-          {items.map((it, j) => <li key={j} style={{ marginBottom: "3px" }}>{parseBold(it)}</li>)}
-        </ol>
-      );
+      while (i < lines.length && /^\d+\. /.test(lines[i])) { items.push(lines[i].replace(/^\d+\. /, "")); i++; }
+      elements.push(<ol key={i} style={{ margin: "6px 0", paddingLeft: "18px" }}>{items.map((it, j) => <li key={j} style={{ marginBottom: "3px" }}>{parseBold(it)}</li>)}</ol>);
     } else if (line.trim() === "") {
-      elements.push(<div key={i} style={{ height: "6px" }} />);
-      i++;
+      elements.push(<div key={i} style={{ height: "6px" }} />); i++;
     } else {
-      elements.push(<p key={i} style={{ margin: "0 0 4px" }}>{parseBold(line)}</p>);
-      i++;
+      elements.push(<p key={i} style={{ margin: "0 0 4px" }}>{parseBold(line)}</p>); i++;
     }
   }
   return elements;
 }
 
 function parseBold(text) {
-  const parts = text.split(/(\*\*[^*]+\*\*)/g);
-  return parts.map((part, i) =>
-    /^\*\*[^*]+\*\*$/.test(part)
-      ? <strong key={i}>{part.slice(2, -2)}</strong>
-      : part
+  return text.split(/(\*\*[^*]+\*\*)/g).map((p, i) =>
+    /^\*\*[^*]+\*\*$/.test(p) ? <strong key={i}>{p.slice(2, -2)}</strong> : p
   );
 }
 
-function ApiKeyModal({ onSave }) {
+// --- Componentes ---
+
+function ApiKeyModal({ onSave, onClose }) {
   const [key, setKey] = useState("");
+  const valid = key.startsWith("sk-");
   return (
-    <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.85)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, padding: "20px" }}>
+    <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.85)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, padding: "20px" }} onClick={e => e.target === e.currentTarget && onClose()}>
       <div style={{ background: "#111", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "20px", padding: "36px", maxWidth: "420px", width: "100%", animation: "fadeIn 0.3s ease" }}>
         <div style={{ fontSize: "2rem", marginBottom: "16px" }}>🔑</div>
         <h2 style={{ margin: "0 0 10px", fontSize: "20px", color: "#fff", fontFamily: "'Syne', sans-serif" }}>API Key de Anthropic</h2>
         <p style={{ margin: "0 0 20px", color: "#888", fontSize: "14px", lineHeight: 1.6 }}>
-          Para usar el chat con IA necesitas tu propia API key de Anthropic. Se guarda solo en tu navegador y nunca se envía a ningún servidor externo.
+          Para el chat con IA necesitas tu propia key de Anthropic. Se guarda solo en tu navegador y no se envía a ningún servidor externo.
         </p>
         <input
-          type="password"
-          value={key}
-          onChange={e => setKey(e.target.value)}
-          onKeyDown={e => e.key === "Enter" && key.startsWith("sk-") && onSave(key)}
+          type="password" value={key} onChange={e => setKey(e.target.value)}
+          onKeyDown={e => e.key === "Enter" && valid && onSave(key)}
           placeholder="sk-ant-..."
-          style={{ width: "100%", padding: "14px 16px", borderRadius: "12px", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.15)", color: "#fff", fontSize: "14px", fontFamily: "inherit", outline: "none", marginBottom: "12px", boxSizing: "border-box" }}
+          style={{ width: "100%", padding: "14px 16px", borderRadius: "12px", background: "rgba(255,255,255,0.06)", border: `1px solid ${valid ? "#FF6B35" : "rgba(255,255,255,0.15)"}`, color: "#fff", fontSize: "14px", fontFamily: "inherit", outline: "none", marginBottom: "12px", boxSizing: "border-box", transition: "border-color 0.2s" }}
           autoFocus
         />
-        <button
-          onClick={() => key.startsWith("sk-") && onSave(key)}
-          disabled={!key.startsWith("sk-")}
-          style={{ width: "100%", padding: "14px", borderRadius: "12px", border: "none", background: key.startsWith("sk-") ? "#FF6B35" : "#333", color: "#fff", fontSize: "14px", fontWeight: "600", cursor: key.startsWith("sk-") ? "pointer" : "default", fontFamily: "inherit", transition: "background 0.2s" }}
-        >
+        <button onClick={() => valid && onSave(key)} disabled={!valid}
+          style={{ width: "100%", padding: "14px", borderRadius: "12px", border: "none", background: valid ? "#FF6B35" : "#2a2a2a", color: valid ? "#fff" : "#555", fontSize: "14px", fontWeight: "600", cursor: valid ? "pointer" : "default", fontFamily: "inherit", transition: "background 0.2s" }}>
           Guardar y continuar
         </button>
-        <p style={{ margin: "14px 0 0", color: "#555", fontSize: "12px", textAlign: "center" }}>
-          Obtén tu key en console.anthropic.com
-        </p>
+        <p style={{ margin: "14px 0 0", color: "#555", fontSize: "12px", textAlign: "center" }}>Obtén tu key en console.anthropic.com</p>
       </div>
+    </div>
+  );
+}
+
+function TipBanner() {
+  const [idx, setIdx] = useState(() => Math.floor(Math.random() * TIPS.length));
+  const [visible, setVisible] = useState(true);
+
+  const next = () => {
+    setVisible(false);
+    setTimeout(() => { setIdx(i => (i + 1) % TIPS.length); setVisible(true); }, 250);
+  };
+
+  return (
+    <div style={{ background: "rgba(255,107,53,0.08)", border: "1px solid rgba(255,107,53,0.2)", borderRadius: "12px", padding: "12px 16px", marginBottom: "20px", display: "flex", alignItems: "center", gap: "10px", cursor: "pointer", transition: "background 0.2s" }}
+      onClick={next}
+      onMouseEnter={e => e.currentTarget.style.background = "rgba(255,107,53,0.13)"}
+      onMouseLeave={e => e.currentTarget.style.background = "rgba(255,107,53,0.08)"}>
+      <div style={{ flex: 1, fontSize: "13px", color: "#ddd", opacity: visible ? 1 : 0, transition: "opacity 0.25s" }}>{TIPS[idx]}</div>
+      <div style={{ color: "#FF6B35", fontSize: "12px", flexShrink: 0, opacity: 0.7 }}>siguiente →</div>
     </div>
   );
 }
@@ -225,65 +277,257 @@ function GuideCard({ guide, completed, onClick }) {
     >
       <div style={{ position: "absolute", top: 0, right: 0, width: "80px", height: "80px", background: guide.color + "18", borderRadius: "0 16px 0 80px" }} />
       {completed && (
-        <div style={{ position: "absolute", top: "12px", right: "12px", background: guide.color, borderRadius: "50%", width: "22px", height: "22px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "12px" }}>✓</div>
+        <div style={{ position: "absolute", top: "12px", right: "12px", background: guide.color, borderRadius: "50%", width: "22px", height: "22px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "12px", color: "#fff" }}>✓</div>
       )}
       <div style={{ fontSize: "2rem", marginBottom: "12px" }}>{guide.emoji}</div>
       <div style={{ fontSize: "10px", fontWeight: "700", letterSpacing: "2px", color: guide.color, textTransform: "uppercase", marginBottom: "6px" }}>{guide.tag}</div>
       <div style={{ fontSize: "16px", fontWeight: "600", color: "#fff", lineHeight: 1.3 }}>{guide.title}</div>
-      <div style={{ marginTop: "12px", fontSize: "12px", color: completed ? guide.color : "#888" }}>
+      <div style={{ marginTop: "12px", fontSize: "12px", color: completed ? guide.color : "#666" }}>
         {completed ? "Completada ✓" : `${guide.steps.length} pasos →`}
       </div>
     </button>
   );
 }
 
-function GuideDetail({ guide, completed, onComplete, onBack }) {
+function GuideDetail({ guide, completed, onComplete, onBack, onOpenGuide }) {
   const [step, setStep] = useState(0);
   const [celebrating, setCelebrating] = useState(false);
   const current = guide.steps[step];
   const isLast = step === guide.steps.length - 1;
 
+  useEffect(() => {
+    const handler = (e) => {
+      if (e.key === "ArrowRight" && !isLast) setStep(s => s + 1);
+      if (e.key === "ArrowLeft" && step > 0) setStep(s => s - 1);
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [step, isLast]);
+
   const handleComplete = () => {
+    if (completed) { onBack(); return; }
     setCelebrating(true);
     onComplete(guide.id);
-    setTimeout(() => { setCelebrating(false); onBack(); }, 2000);
+    setTimeout(() => { setCelebrating(false); onBack(); }, 1800);
   };
+
+  const relatedGuides = (guide.related || []).map(id => GUIDES.find(g => g.id === id)).filter(Boolean);
 
   return (
     <div style={{ animation: "fadeIn 0.3s ease" }}>
       {celebrating && (
-        <div style={{ position: "fixed", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", zIndex: 999, pointerEvents: "none" }}>
-          <div style={{ fontSize: "80px", animation: "celebrate 0.6s ease" }}>🎉</div>
+        <div style={{ position: "fixed", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", zIndex: 999, pointerEvents: "none", flexDirection: "column", gap: "12px" }}>
+          <div style={{ fontSize: "80px", animation: "celebrate 1.8s ease forwards" }}>🎉</div>
+          <div style={{ color: "#fff", fontWeight: "700", fontSize: "18px", animation: "fadeIn 0.3s ease 0.3s both" }}>¡Guía completada!</div>
         </div>
       )}
-      <button onClick={onBack} style={{ background: "none", border: "none", color: "#888", cursor: "pointer", fontSize: "14px", marginBottom: "24px", padding: 0, fontFamily: "inherit" }}>← Volver</button>
-      <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "32px" }}>
+
+      <button onClick={onBack} style={{ background: "none", border: "none", color: "#666", cursor: "pointer", fontSize: "14px", marginBottom: "24px", padding: 0, fontFamily: "inherit", display: "flex", alignItems: "center", gap: "6px" }}>
+        ← Volver
+      </button>
+
+      <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "28px" }}>
         <span style={{ fontSize: "2rem" }}>{guide.emoji}</span>
         <div>
           <div style={{ fontSize: "11px", fontWeight: "700", letterSpacing: "2px", color: guide.color, textTransform: "uppercase" }}>{guide.tag}</div>
           <h2 style={{ margin: 0, fontSize: "22px", color: "#fff" }}>{guide.title}</h2>
         </div>
       </div>
+
+      {/* Progress bar */}
       <div style={{ display: "flex", gap: "6px", marginBottom: "28px" }}>
         {guide.steps.map((_, i) => (
           <button key={i} onClick={() => setStep(i)} style={{ flex: 1, height: "4px", border: "none", borderRadius: "2px", cursor: "pointer", background: i <= step ? guide.color : "rgba(255,255,255,0.1)", transition: "background 0.3s ease", padding: 0 }} />
         ))}
       </div>
-      <div style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "16px", padding: "28px", minHeight: "160px" }}>
-        <div style={{ fontSize: "11px", fontWeight: "700", color: guide.color, letterSpacing: "1px", textTransform: "uppercase", marginBottom: "10px" }}>Paso {step + 1} de {guide.steps.length}</div>
+
+      {/* Step content */}
+      <div style={{ background: "rgba(255,255,255,0.04)", border: `1px solid ${guide.color}22`, borderRadius: "16px", padding: "28px", minHeight: "160px", position: "relative" }}>
+        <div style={{ fontSize: "11px", fontWeight: "700", color: guide.color, letterSpacing: "1px", textTransform: "uppercase", marginBottom: "10px" }}>
+          Paso {step + 1} de {guide.steps.length}
+        </div>
         <h3 style={{ margin: "0 0 14px", fontSize: "18px", color: "#fff" }}>{current.title}</h3>
-        <p style={{ margin: 0, color: "#ccc", lineHeight: 1.7, fontSize: "15px" }}>{current.body}</p>
+        <p style={{ margin: 0, color: "#ccc", lineHeight: 1.75, fontSize: "15px" }}>{current.body}</p>
+        <div style={{ position: "absolute", bottom: "12px", right: "16px", fontSize: "11px", color: "#444" }}>← → teclado</div>
       </div>
-      <div style={{ display: "flex", gap: "12px", marginTop: "20px" }}>
-        <button onClick={() => setStep(s => Math.max(0, s - 1))} disabled={step === 0} style={{ flex: 1, padding: "14px", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.12)", background: "transparent", color: step === 0 ? "#444" : "#fff", cursor: step === 0 ? "default" : "pointer", fontSize: "14px", fontFamily: "inherit" }}>← Anterior</button>
+
+      {/* Navigation */}
+      <div style={{ display: "flex", gap: "12px", marginTop: "16px" }}>
+        <button onClick={() => setStep(s => Math.max(0, s - 1))} disabled={step === 0}
+          style={{ flex: 1, padding: "14px", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.1)", background: "transparent", color: step === 0 ? "#333" : "#fff", cursor: step === 0 ? "default" : "pointer", fontSize: "14px", fontFamily: "inherit", transition: "all 0.2s" }}>← Anterior</button>
         {isLast ? (
-          <button onClick={completed ? onBack : handleComplete} style={{ flex: 1, padding: "14px", borderRadius: "12px", border: "none", background: completed ? "#2EC4B6" : guide.color, color: "#fff", cursor: "pointer", fontSize: "14px", fontWeight: "600", fontFamily: "inherit" }}>
+          <button onClick={handleComplete}
+            style={{ flex: 1, padding: "14px", borderRadius: "12px", border: "none", background: completed ? "#2EC4B6" : guide.color, color: "#fff", cursor: "pointer", fontSize: "14px", fontWeight: "600", fontFamily: "inherit" }}>
             {completed ? "Ya completada ✓" : "Marcar como completada"}
           </button>
         ) : (
-          <button onClick={() => setStep(s => s + 1)} style={{ flex: 1, padding: "14px", borderRadius: "12px", border: "none", background: guide.color, color: "#fff", cursor: "pointer", fontSize: "14px", fontWeight: "600", fontFamily: "inherit" }}>Siguiente →</button>
+          <button onClick={() => setStep(s => s + 1)}
+            style={{ flex: 1, padding: "14px", borderRadius: "12px", border: "none", background: guide.color, color: "#fff", cursor: "pointer", fontSize: "14px", fontWeight: "600", fontFamily: "inherit" }}>
+            Siguiente →
+          </button>
         )}
       </div>
+
+      {/* Related guides */}
+      {relatedGuides.length > 0 && (
+        <div style={{ marginTop: "36px" }}>
+          <div style={{ fontSize: "11px", fontWeight: "700", letterSpacing: "2px", color: "#555", textTransform: "uppercase", marginBottom: "14px" }}>También te puede interesar</div>
+          <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+            {relatedGuides.map(g => (
+              <button key={g.id} onClick={() => onOpenGuide(g)}
+                style={{ display: "flex", alignItems: "center", gap: "14px", padding: "14px 18px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "12px", cursor: "pointer", textAlign: "left", transition: "all 0.2s", fontFamily: "inherit" }}
+                onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.07)"; e.currentTarget.style.borderColor = g.color + "55"; }}
+                onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.03)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.07)"; }}>
+                <span style={{ fontSize: "1.4rem" }}>{g.emoji}</span>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: "10px", fontWeight: "700", color: g.color, letterSpacing: "1px", textTransform: "uppercase" }}>{g.tag}</div>
+                  <div style={{ fontSize: "14px", color: "#ddd", fontWeight: "500" }}>{g.title}</div>
+                </div>
+                <span style={{ color: "#444", fontSize: "14px" }}>→</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function CalcNomina() {
+  const [bruto, setBruto] = useState(25000);
+
+  const ss = bruto * 0.0635;
+  const irpf = calcIRPF(bruto);
+  const neto = bruto - ss - irpf;
+  const netoMensual = neto / 12;
+  const pctTotal = (ss + irpf) / bruto;
+
+  const Row = ({ label, value, color, bold }) => (
+    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 0", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+      <span style={{ fontSize: "14px", color: bold ? "#fff" : "#aaa", fontWeight: bold ? "600" : "400" }}>{label}</span>
+      <span style={{ fontSize: "14px", color: color || (bold ? "#fff" : "#ccc"), fontWeight: bold ? "700" : "400" }}>{value}</span>
+    </div>
+  );
+
+  return (
+    <div>
+      <h3 style={{ margin: "0 0 6px", fontSize: "18px", color: "#fff" }}>💶 Calculadora de Nómina</h3>
+      <p style={{ margin: "0 0 24px", color: "#666", fontSize: "13px" }}>Estimación orientativa del salario neto según el bruto anual.</p>
+
+      <label style={{ fontSize: "12px", color: "#666", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: "8px" }}>Salario bruto anual</label>
+      <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "8px" }}>
+        <input
+          type="range" min="10000" max="100000" step="500" value={bruto}
+          onChange={e => setBruto(+e.target.value)}
+          style={{ flex: 1, accentColor: "#FF6B35", cursor: "pointer" }}
+        />
+        <div style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "10px", padding: "8px 14px", minWidth: "110px", textAlign: "center" }}>
+          <input
+            type="number" value={bruto} onChange={e => setBruto(Math.max(10000, Math.min(200000, +e.target.value || 10000)))}
+            style={{ background: "none", border: "none", color: "#FF6B35", fontSize: "15px", fontWeight: "700", fontFamily: "inherit", width: "90px", textAlign: "center", outline: "none" }}
+          />
+          <span style={{ color: "#666", fontSize: "13px" }}> €/año</span>
+        </div>
+      </div>
+      <div style={{ display: "flex", justifyContent: "space-between", fontSize: "11px", color: "#444", marginBottom: "24px" }}>
+        <span>10.000€</span><span>100.000€</span>
+      </div>
+
+      <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "14px", padding: "20px 22px", marginBottom: "16px" }}>
+        <Row label="Salario bruto anual" value={fmt(bruto)} bold />
+        <Row label={`Cotización SS (~6,35%)`} value={`− ${fmt(ss)}`} color="#E63946" />
+        <Row label={`Retención IRPF (${fmtPct(irpf / bruto)})`} value={`− ${fmt(irpf)}`} color="#F77F00" />
+        <Row label="Salario neto anual" value={fmt(neto)} bold />
+      </div>
+
+      <div style={{ background: "linear-gradient(135deg, rgba(255,107,53,0.15), rgba(255,107,53,0.05))", border: "1px solid rgba(255,107,53,0.25)", borderRadius: "14px", padding: "20px 22px" }}>
+        <div style={{ fontSize: "12px", color: "#FF6B35", letterSpacing: "1px", textTransform: "uppercase", marginBottom: "6px" }}>Cobras al mes</div>
+        <div style={{ fontSize: "36px", fontWeight: "800", color: "#fff", fontFamily: "'Syne', sans-serif" }}>{fmt(netoMensual)}</div>
+        <div style={{ fontSize: "13px", color: "#888", marginTop: "6px" }}>
+          Te retienen el {fmtPct(pctTotal)} de tu bruto ({fmt(ss + irpf)}/año)
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CalcAutonomo() {
+  const [ingresos, setIngresos] = useState(1500);
+  const [nuevo, setNuevo] = useState(false);
+
+  const cuotaSS = nuevo ? 80 : calcAutonomoCuota(ingresos);
+  const ivaMes = ingresos * 0.21;
+  const irpfRetencion = ingresos * 0.15;
+  const gastosMes = cuotaSS + irpfRetencion;
+  const netoBolsillo = ingresos - cuotaSS;
+
+  const Row = ({ label, value, color, bold, sub }) => (
+    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 0", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+      <span style={{ fontSize: "14px", color: bold ? "#fff" : "#aaa", fontWeight: bold ? "600" : "400" }}>
+        {label}
+        {sub && <div style={{ fontSize: "11px", color: "#555", marginTop: "2px" }}>{sub}</div>}
+      </span>
+      <span style={{ fontSize: "14px", color: color || (bold ? "#fff" : "#ccc"), fontWeight: bold ? "700" : "400" }}>{value}</span>
+    </div>
+  );
+
+  return (
+    <div>
+      <h3 style={{ margin: "0 0 6px", fontSize: "18px", color: "#fff" }}>🧾 Calculadora Autónomo</h3>
+      <p style={{ margin: "0 0 24px", color: "#666", fontSize: "13px" }}>Estimación de cuotas y retenciones según tus ingresos mensuales.</p>
+
+      <label style={{ fontSize: "12px", color: "#666", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: "8px" }}>Ingresos netos mensuales (sin IVA)</label>
+      <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "8px" }}>
+        <input type="range" min="500" max="5000" step="50" value={ingresos} onChange={e => setIngresos(+e.target.value)} style={{ flex: 1, accentColor: "#F77F00", cursor: "pointer" }} />
+        <div style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "10px", padding: "8px 14px", minWidth: "110px", textAlign: "center" }}>
+          <input type="number" value={ingresos} onChange={e => setIngresos(Math.max(500, Math.min(10000, +e.target.value || 500)))} style={{ background: "none", border: "none", color: "#F77F00", fontSize: "15px", fontWeight: "700", fontFamily: "inherit", width: "90px", textAlign: "center", outline: "none" }} />
+          <span style={{ color: "#666", fontSize: "13px" }}> €/mes</span>
+        </div>
+      </div>
+      <div style={{ display: "flex", justifyContent: "space-between", fontSize: "11px", color: "#444", marginBottom: "20px" }}>
+        <span>500€</span><span>5.000€</span>
+      </div>
+
+      <button onClick={() => setNuevo(n => !n)} style={{ background: nuevo ? "rgba(247,127,0,0.2)" : "rgba(255,255,255,0.05)", border: `1px solid ${nuevo ? "rgba(247,127,0,0.4)" : "rgba(255,255,255,0.1)"}`, borderRadius: "10px", padding: "10px 18px", color: nuevo ? "#F77F00" : "#888", fontSize: "13px", cursor: "pointer", fontFamily: "inherit", marginBottom: "24px", transition: "all 0.2s" }}>
+        {nuevo ? "✓ " : ""}Tarifa plana primer año (80€/mes)
+      </button>
+
+      <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "14px", padding: "20px 22px", marginBottom: "16px" }}>
+        <Row label="Ingresos facturados (sin IVA)" value={fmt(ingresos)} bold />
+        <Row label="Cuota SS (RETA)" value={`− ${fmt(cuotaSS)}`} color="#E63946" sub={nuevo ? "Tarifa plana nuevo autónomo" : undefined} />
+        <Row label="IRPF retenido en factura (15%)" value={`− ${fmt(irpfRetencion)}`} color="#F77F00" sub="Lo retiene quien te paga" />
+        <Row label="Neto en tu cuenta" value={fmt(netoBolsillo)} bold />
+      </div>
+
+      <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "14px", padding: "16px 22px", marginBottom: "16px" }}>
+        <div style={{ fontSize: "12px", color: "#555", letterSpacing: "1px", textTransform: "uppercase", marginBottom: "10px" }}>Recuerda reservar también…</div>
+        <Row label="IVA a ingresar a Hacienda (21%)" value={fmt(ivaMes) + "/mes"} color="#9B5DE5" sub="Lo cobras tú, lo devuelves cada trimestre" />
+      </div>
+
+      <div style={{ background: "linear-gradient(135deg, rgba(247,127,0,0.15), rgba(247,127,0,0.05))", border: "1px solid rgba(247,127,0,0.25)", borderRadius: "14px", padding: "20px 22px" }}>
+        <div style={{ fontSize: "12px", color: "#F77F00", letterSpacing: "1px", textTransform: "uppercase", marginBottom: "6px" }}>Tienes disponible cada mes</div>
+        <div style={{ fontSize: "36px", fontWeight: "800", color: "#fff", fontFamily: "'Syne', sans-serif" }}>{fmt(netoBolsillo)}</div>
+        <div style={{ fontSize: "13px", color: "#888", marginTop: "6px" }}>
+          Reserva {fmt(ivaMes + irpfRetencion * 0)} adicionales para el IVA trimestral
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CalculadorasView() {
+  const [calc, setCalc] = useState("nomina");
+  return (
+    <div style={{ animation: "fadeIn 0.3s ease" }}>
+      <div style={{ display: "flex", gap: "4px", marginBottom: "28px", background: "rgba(255,255,255,0.04)", padding: "4px", borderRadius: "12px" }}>
+        {[{ id: "nomina", label: "💶 Nómina" }, { id: "autonomo", label: "🧾 Autónomo" }].map(t => (
+          <button key={t.id} onClick={() => setCalc(t.id)} style={{ flex: 1, padding: "10px", border: "none", borderRadius: "8px", background: calc === t.id ? "rgba(255,255,255,0.1)" : "transparent", color: calc === t.id ? "#fff" : "#666", fontWeight: calc === t.id ? "600" : "400", cursor: "pointer", fontSize: "13px", fontFamily: "inherit", transition: "all 0.2s" }}>{t.label}</button>
+        ))}
+      </div>
+      {calc === "nomina" ? <CalcNomina /> : <CalcAutonomo />}
+      <p style={{ margin: "20px 0 0", fontSize: "12px", color: "#444", textAlign: "center", lineHeight: 1.5 }}>
+        Cálculo orientativo. Para casos comunes sin deducciones especiales. Consulta a un gestor para tu situación concreta.
+      </p>
     </div>
   );
 }
@@ -298,7 +542,11 @@ function ChatView({ comunidad, apiKey, onNeedKey }) {
 
   useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: "smooth" }); }, [messages, loading]);
 
-  const SUGGESTIONS = ["¿Cuándo tengo que hacer la renta?", "¿Cómo pido una beca universitaria?", "¿Qué necesito para ser autónomo?", "¿Cómo funciona la hipoteca?", "¿Qué derechos tengo en el trabajo?", "¿Cómo consigo el NIE?"];
+  const SUGGESTIONS = [
+    "¿Cuándo tengo que hacer la renta?", "¿Cómo pido una beca universitaria?",
+    "¿Qué necesito para ser autónomo?", "¿Cómo funciona la hipoteca?",
+    "¿Qué derechos tengo en el trabajo?", "¿Cómo consigo el NIE?",
+  ];
 
   const send = async (text) => {
     const msg = text || input;
@@ -320,70 +568,78 @@ function ChatView({ comunidad, apiKey, onNeedKey }) {
         },
         body: JSON.stringify({
           model: "claude-sonnet-4-5",
-          max_tokens: 1000,
-          system: `Eres un asistente experto en trámites, impuestos, finanzas personales, educación, derechos laborales y gestiones administrativas en España, especialmente para jóvenes de la Generación Z.${comunidad !== "Todas" ? ` El usuario vive en ${comunidad}, ten en cuenta las particularidades de esa comunidad autónoma.` : ""} Explica de forma clara y cercana, sin tecnicismos. Usa ejemplos concretos con cifras cuando sea útil. Puedes usar **negrita** y listas con guiones para organizar la información. Responde siempre en español.`,
+          max_tokens: 1024,
+          system: `Eres un asistente experto en trámites, impuestos, finanzas personales, educación, derechos laborales y gestiones administrativas en España, especialmente para jóvenes.${comunidad !== "Todas" ? ` El usuario vive en ${comunidad}, ten en cuenta las particularidades de esa comunidad autónoma.` : ""} Explica de forma clara y cercana, sin tecnicismos. Usa ejemplos concretos con cifras. Puedes usar **negrita** y listas con guiones para organizar la información. Responde siempre en español y de forma concisa.`,
           messages: newMessages.map(m => ({ role: m.role, content: m.content }))
         })
       });
       if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
         if (res.status === 401) { onNeedKey(); return; }
-        throw new Error(err.error?.message || "Error de API");
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error?.message || `Error ${res.status}`);
       }
       const data = await res.json();
-      const reply = data.content?.map(b => b.text || "").join("") || "No pude responder, intenta de nuevo.";
+      const reply = data.content?.map(b => b.text || "").join("") || "Sin respuesta, intenta de nuevo.";
       setMessages(prev => [...prev, { role: "assistant", content: reply }]);
     } catch (e) {
-      setMessages(prev => [...prev, { role: "assistant", content: `Error: ${e.message}. Intenta de nuevo.` }]);
+      setMessages(prev => [...prev, { role: "assistant", content: `Error: ${e.message}` }]);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "calc(100vh - 300px)", minHeight: "400px" }}>
+    <div style={{ display: "flex", flexDirection: "column", height: "calc(100vh - 320px)", minHeight: "400px" }}>
       <div style={{ flex: 1, overflowY: "auto", paddingRight: "4px" }}>
         {messages.map((m, i) => (
-          <div key={i} style={{ display: "flex", justifyContent: m.role === "user" ? "flex-end" : "flex-start", marginBottom: "14px" }}>
+          <div key={i} style={{ display: "flex", justifyContent: m.role === "user" ? "flex-end" : "flex-start", marginBottom: "14px", alignItems: "flex-start" }}>
             {m.role === "assistant" && (
-              <div style={{ width: "28px", height: "28px", borderRadius: "50%", background: "#FF6B35", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "14px", marginRight: "8px", flexShrink: 0, marginTop: "2px" }}>E</div>
+              <div style={{ width: "28px", height: "28px", borderRadius: "50%", background: "#FF6B35", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "13px", fontWeight: "700", marginRight: "8px", flexShrink: 0, marginTop: "2px", color: "#fff" }}>E</div>
             )}
-            <div style={{ maxWidth: "78%", padding: "12px 16px", borderRadius: m.role === "user" ? "18px 18px 4px 18px" : "18px 18px 18px 4px", background: m.role === "user" ? "#FF6B35" : "rgba(255,255,255,0.07)", color: "#fff", fontSize: "14px", lineHeight: 1.65, border: m.role === "assistant" ? "1px solid rgba(255,255,255,0.1)" : "none" }}>
+            <div style={{ maxWidth: "78%", padding: "12px 16px", borderRadius: m.role === "user" ? "18px 18px 4px 18px" : "18px 18px 18px 4px", background: m.role === "user" ? "#FF6B35" : "rgba(255,255,255,0.06)", color: "#fff", fontSize: "14px", lineHeight: 1.65, border: m.role === "assistant" ? "1px solid rgba(255,255,255,0.09)" : "none" }}>
               {m.role === "assistant" ? renderMarkdown(m.content) : m.content}
             </div>
           </div>
         ))}
         {loading && (
           <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "14px" }}>
-            <div style={{ width: "28px", height: "28px", borderRadius: "50%", background: "#FF6B35", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "14px" }}>E</div>
-            <div style={{ display: "flex", gap: "5px", padding: "12px 16px", background: "rgba(255,255,255,0.07)", borderRadius: "18px 18px 18px 4px", border: "1px solid rgba(255,255,255,0.1)" }}>
-              {[0, 1, 2].map(i => <div key={i} style={{ width: "7px", height: "7px", borderRadius: "50%", background: "#666", animation: `bounce 1s ease ${i * 0.15}s infinite` }} />)}
+            <div style={{ width: "28px", height: "28px", borderRadius: "50%", background: "#FF6B35", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "13px", fontWeight: "700", color: "#fff" }}>E</div>
+            <div style={{ display: "flex", gap: "5px", padding: "12px 16px", background: "rgba(255,255,255,0.06)", borderRadius: "18px 18px 18px 4px", border: "1px solid rgba(255,255,255,0.09)" }}>
+              {[0, 1, 2].map(i => <div key={i} style={{ width: "7px", height: "7px", borderRadius: "50%", background: "#555", animation: `bounce 1s ease ${i * 0.15}s infinite` }} />)}
             </div>
           </div>
         )}
         <div ref={bottomRef} />
       </div>
+
       {messages.length === 1 && (
         <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "14px" }}>
           {SUGGESTIONS.map(s => (
-            <button key={s} onClick={() => send(s)} style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "20px", padding: "8px 14px", color: "#ccc", fontSize: "12px", cursor: "pointer", fontFamily: "inherit", transition: "all 0.2s" }}
-              onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.1)"; e.currentTarget.style.color = "#fff"; }}
-              onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.05)"; e.currentTarget.style.color = "#ccc"; }}
-            >{s}</button>
+            <button key={s} onClick={() => send(s)}
+              style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "20px", padding: "8px 14px", color: "#aaa", fontSize: "12px", cursor: "pointer", fontFamily: "inherit", transition: "all 0.2s" }}
+              onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.09)"; e.currentTarget.style.color = "#fff"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.04)"; e.currentTarget.style.color = "#aaa"; }}>
+              {s}
+            </button>
           ))}
         </div>
       )}
+
       <div style={{ display: "flex", gap: "10px" }}>
-        <input value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key === "Enter" && !e.shiftKey && send()} placeholder="Pregúntame lo que quieras…" style={{ flex: 1, padding: "14px 18px", borderRadius: "14px", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)", color: "#fff", fontSize: "14px", fontFamily: "inherit", outline: "none", transition: "border-color 0.2s" }}
-          onFocus={e => e.target.style.borderColor = "rgba(255,107,53,0.5)"}
-          onBlur={e => e.target.style.borderColor = "rgba(255,255,255,0.12)"}
+        <input value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key === "Enter" && !e.shiftKey && send()}
+          placeholder="Pregúntame lo que quieras…"
+          style={{ flex: 1, padding: "14px 18px", borderRadius: "14px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "#fff", fontSize: "14px", fontFamily: "inherit", outline: "none", transition: "border-color 0.2s" }}
+          onFocus={e => e.target.style.borderColor = "rgba(255,107,53,0.45)"}
+          onBlur={e => e.target.style.borderColor = "rgba(255,255,255,0.1)"}
         />
-        <button onClick={() => send()} disabled={loading || !input.trim()} style={{ padding: "14px 20px", borderRadius: "14px", border: "none", background: input.trim() && !loading ? "#FF6B35" : "#2a2a2a", color: input.trim() && !loading ? "#fff" : "#555", cursor: input.trim() && !loading ? "pointer" : "default", fontSize: "16px", transition: "all 0.2s" }}>↑</button>
+        <button onClick={() => send()} disabled={loading || !input.trim()}
+          style={{ padding: "14px 20px", borderRadius: "14px", border: "none", background: input.trim() && !loading ? "#FF6B35" : "#1e1e1e", color: input.trim() && !loading ? "#fff" : "#444", cursor: input.trim() && !loading ? "pointer" : "default", fontSize: "16px", transition: "all 0.2s" }}>↑</button>
       </div>
     </div>
   );
 }
 
+// --- App principal ---
 export default function App() {
   const [tab, setTab] = useState("guias");
   const [comunidad, setComunidad] = useState("Todas");
@@ -411,8 +667,12 @@ export default function App() {
     });
   }, []);
 
-  const tags = ["Todos", ...new Set(GUIDES.map(g => g.tag))];
+  const openGuide = (guide) => {
+    setActiveGuide(guide);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
+  const tags = ["Todos", ...new Set(GUIDES.map(g => g.tag))];
   const filtered = GUIDES.filter(g => {
     const matchTag = filterTag === "Todos" || g.tag === filterTag;
     const q = search.toLowerCase();
@@ -422,22 +682,29 @@ export default function App() {
 
   const progress = Math.round((completed.length / GUIDES.length) * 100);
 
+  const TABS = [
+    { id: "guias", label: "📚 Guías" },
+    { id: "calc", label: "🔢 Calcular" },
+    { id: "chat", label: "💬 IA" },
+  ];
+
   return (
     <div style={{ minHeight: "100vh", background: "#0a0a0f", color: "#fff", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Syne:wght@700;800&display=swap');
         * { box-sizing: border-box; }
         ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 2px; }
+        ::-webkit-scrollbar-thumb { background: #222; border-radius: 2px; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes bounce { 0%,80%,100% { transform: scale(0.8); opacity: 0.5; } 40% { transform: scale(1); opacity: 1; } }
-        @keyframes celebrate { 0% { transform: scale(0) rotate(-20deg); opacity:0; } 50% { transform: scale(1.3) rotate(10deg); opacity:1; } 100% { transform: scale(1) rotate(0); opacity:0; } }
+        @keyframes celebrate { 0% { transform: scale(0) rotate(-20deg); opacity:0; } 40% { transform: scale(1.3) rotate(10deg); opacity:1; } 100% { transform: scale(0.9) rotate(0); opacity:0; } }
+        input[type=range] { height: 4px; }
         input::placeholder { color: #555; }
         select option { background: #1a1a1a; }
         button { font-family: inherit; }
       `}</style>
 
-      {showApiModal && <ApiKeyModal onSave={saveApiKey} />}
+      {showApiModal && <ApiKeyModal onSave={saveApiKey} onClose={() => setShowApiModal(false)} />}
 
       <div style={{ maxWidth: "680px", margin: "0 auto", padding: "32px 20px 100px" }}>
 
@@ -445,45 +712,48 @@ export default function App() {
         <div style={{ marginBottom: "28px", animation: "fadeIn 0.4s ease" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
             <div>
-              <div style={{ fontSize: "11px", fontWeight: "700", letterSpacing: "3px", color: "#FF6B35", textTransform: "uppercase", marginBottom: "8px" }}>Generación Z</div>
+              <div style={{ fontSize: "11px", fontWeight: "700", letterSpacing: "3px", color: "#FF6B35", textTransform: "uppercase", marginBottom: "8px" }}>Generación Z · España</div>
               <h1 style={{ margin: "0 0 6px", fontFamily: "'Syne', sans-serif", fontSize: "clamp(26px, 6vw, 40px)", fontWeight: "800", lineHeight: 1.1 }}>
                 Aprende a ser<br /><span style={{ color: "#FF6B35" }}>adulto</span> en España
               </h1>
-              <p style={{ margin: "10px 0 0", color: "#666", fontSize: "14px" }}>Todo lo que el cole no te enseñó · {GUIDES.length} guías</p>
+              <p style={{ margin: "10px 0 0", color: "#555", fontSize: "14px" }}>Todo lo que el cole no te enseñó · {GUIDES.length} guías</p>
             </div>
             {/* Progress ring */}
             <div style={{ textAlign: "center", flexShrink: 0 }}>
-              <svg width="60" height="60" viewBox="0 0 60 60">
-                <circle cx="30" cy="30" r="24" fill="none" stroke="rgba(255,255,255,0.07)" strokeWidth="5" />
-                <circle cx="30" cy="30" r="24" fill="none" stroke="#FF6B35" strokeWidth="5"
-                  strokeDasharray={`${2 * Math.PI * 24}`}
-                  strokeDashoffset={`${2 * Math.PI * 24 * (1 - progress / 100)}`}
-                  strokeLinecap="round"
-                  transform="rotate(-90 30 30)"
-                  style={{ transition: "stroke-dashoffset 0.5s ease" }}
+              <svg width="62" height="62" viewBox="0 0 62 62" style={{ display: "block" }}>
+                <circle cx="31" cy="31" r="25" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="5" />
+                <circle cx="31" cy="31" r="25" fill="none" stroke="#FF6B35" strokeWidth="5"
+                  strokeDasharray={`${2 * Math.PI * 25}`}
+                  strokeDashoffset={`${2 * Math.PI * 25 * (1 - progress / 100)}`}
+                  strokeLinecap="round" transform="rotate(-90 31 31)"
+                  style={{ transition: "stroke-dashoffset 0.6s ease" }}
                 />
-                <text x="30" y="35" textAnchor="middle" fill="#fff" fontSize="13" fontWeight="700" fontFamily="inherit">{progress}%</text>
+                <text x="31" y="36" textAnchor="middle" fill="#fff" fontSize="13" fontWeight="700" fontFamily="DM Sans, sans-serif">{progress}%</text>
               </svg>
-              <div style={{ fontSize: "10px", color: "#555", marginTop: "4px" }}>{completed.length}/{GUIDES.length}</div>
+              <div style={{ fontSize: "10px", color: "#444", marginTop: "4px" }}>{completed.length}/{GUIDES.length}</div>
             </div>
           </div>
         </div>
 
-        {/* Comunidad selector */}
+        {/* Comunidad */}
         <div style={{ marginBottom: "20px" }}>
-          <label style={{ fontSize: "11px", color: "#555", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: "8px" }}>Tu comunidad autónoma</label>
-          <select value={comunidad} onChange={e => setComunidad(e.target.value)} style={{ width: "100%", padding: "12px 16px", borderRadius: "12px", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)", color: "#fff", fontSize: "14px", fontFamily: "inherit", outline: "none", cursor: "pointer" }}>
-            {COMUNIDADES.map(c => <option key={c} value={c}>{c}</option>)}
+          <select value={comunidad} onChange={e => setComunidad(e.target.value)}
+            style={{ width: "100%", padding: "11px 16px", borderRadius: "12px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.09)", color: comunidad === "Todas" ? "#666" : "#fff", fontSize: "14px", fontFamily: "inherit", outline: "none", cursor: "pointer" }}>
+            {COMUNIDADES.map(c => <option key={c} value={c}>{c === "Todas" ? "📍 Selecciona tu comunidad autónoma" : c}</option>)}
           </select>
         </div>
 
         {/* Tabs */}
         <div style={{ display: "flex", gap: "4px", marginBottom: "24px", background: "rgba(255,255,255,0.04)", padding: "4px", borderRadius: "14px" }}>
-          {[{ id: "guias", label: "📚 Guías" }, { id: "chat", label: "💬 Pregunta a la IA" }].map(t => (
-            <button key={t.id} onClick={() => { setTab(t.id); setActiveGuide(null); }} style={{ flex: 1, padding: "12px", border: "none", borderRadius: "10px", background: tab === t.id ? "#FF6B35" : "transparent", color: tab === t.id ? "#fff" : "#777", fontWeight: tab === t.id ? "600" : "400", cursor: "pointer", fontSize: "14px", transition: "all 0.2s ease" }}>{t.label}</button>
+          {TABS.map(t => (
+            <button key={t.id} onClick={() => { setTab(t.id); setActiveGuide(null); }}
+              style={{ flex: 1, padding: "11px 8px", border: "none", borderRadius: "10px", background: tab === t.id ? "#FF6B35" : "transparent", color: tab === t.id ? "#fff" : "#666", fontWeight: tab === t.id ? "600" : "400", cursor: "pointer", fontSize: "13px", transition: "all 0.2s ease", whiteSpace: "nowrap" }}>
+              {t.label}
+            </button>
           ))}
         </div>
 
+        {/* GUÍAS */}
         {tab === "guias" && (
           <div style={{ animation: "fadeIn 0.3s ease" }}>
             {activeGuide ? (
@@ -492,43 +762,45 @@ export default function App() {
                 completed={completed.includes(activeGuide.id)}
                 onComplete={markComplete}
                 onBack={() => setActiveGuide(null)}
+                onOpenGuide={openGuide}
               />
             ) : (
               <>
-                {/* Search */}
+                <TipBanner />
+
                 <div style={{ position: "relative", marginBottom: "16px" }}>
-                  <span style={{ position: "absolute", left: "14px", top: "50%", transform: "translateY(-50%)", color: "#555", fontSize: "16px", pointerEvents: "none" }}>🔍</span>
-                  <input
-                    value={search}
-                    onChange={e => setSearch(e.target.value)}
-                    placeholder="Buscar guías…"
-                    style={{ width: "100%", padding: "12px 16px 12px 42px", borderRadius: "12px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "#fff", fontSize: "14px", fontFamily: "inherit", outline: "none", transition: "border-color 0.2s" }}
-                    onFocus={e => e.target.style.borderColor = "rgba(255,107,53,0.4)"}
-                    onBlur={e => e.target.style.borderColor = "rgba(255,255,255,0.1)"}
+                  <span style={{ position: "absolute", left: "14px", top: "50%", transform: "translateY(-50%)", color: "#444", fontSize: "15px", pointerEvents: "none" }}>🔍</span>
+                  <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Buscar guías…"
+                    style={{ width: "100%", padding: "12px 40px 12px 42px", borderRadius: "12px", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)", color: "#fff", fontSize: "14px", fontFamily: "inherit", outline: "none", transition: "border-color 0.2s" }}
+                    onFocus={e => e.target.style.borderColor = "rgba(255,107,53,0.35)"}
+                    onBlur={e => e.target.style.borderColor = "rgba(255,255,255,0.09)"}
                   />
                   {search && (
-                    <button onClick={() => setSearch("")} style={{ position: "absolute", right: "14px", top: "50%", transform: "translateY(-50%)", background: "none", border: "none", color: "#555", cursor: "pointer", fontSize: "16px", padding: 0, lineHeight: 1 }}>×</button>
+                    <button onClick={() => setSearch("")} style={{ position: "absolute", right: "14px", top: "50%", transform: "translateY(-50%)", background: "none", border: "none", color: "#555", cursor: "pointer", fontSize: "18px", padding: 0, lineHeight: 1 }}>×</button>
                   )}
                 </div>
 
-                {/* Tag filters */}
-                <div style={{ display: "flex", gap: "8px", marginBottom: "20px", flexWrap: "wrap" }}>
+                <div style={{ display: "flex", gap: "7px", marginBottom: "20px", flexWrap: "wrap" }}>
                   {tags.map(t => (
-                    <button key={t} onClick={() => setFilterTag(t)} style={{ padding: "7px 16px", borderRadius: "20px", border: "1px solid", borderColor: filterTag === t ? "#FF6B35" : "rgba(255,255,255,0.1)", background: filterTag === t ? "#FF6B35" : "transparent", color: filterTag === t ? "#fff" : "#777", fontSize: "12px", cursor: "pointer", transition: "all 0.2s", fontWeight: filterTag === t ? "600" : "400" }}>{t}</button>
+                    <button key={t} onClick={() => setFilterTag(t)}
+                      style={{ padding: "6px 14px", borderRadius: "20px", border: "1px solid", borderColor: filterTag === t ? "#FF6B35" : "rgba(255,255,255,0.09)", background: filterTag === t ? "#FF6B35" : "transparent", color: filterTag === t ? "#fff" : "#666", fontSize: "12px", cursor: "pointer", transition: "all 0.2s", fontWeight: filterTag === t ? "600" : "400" }}>
+                      {t}
+                    </button>
                   ))}
                 </div>
 
                 {filtered.length === 0 ? (
                   <div style={{ textAlign: "center", padding: "60px 20px", color: "#555" }}>
                     <div style={{ fontSize: "2.5rem", marginBottom: "12px" }}>🔎</div>
-                    <div style={{ fontSize: "16px" }}>No hay guías que coincidan</div>
-                    <button onClick={() => { setSearch(""); setFilterTag("Todos"); }} style={{ marginTop: "14px", background: "none", border: "1px solid rgba(255,255,255,0.15)", borderRadius: "20px", color: "#888", padding: "8px 18px", cursor: "pointer", fontSize: "13px", fontFamily: "inherit" }}>Limpiar filtros</button>
+                    <div style={{ fontSize: "16px", marginBottom: "16px" }}>Sin resultados para "{search}"</div>
+                    <button onClick={() => { setSearch(""); setFilterTag("Todos"); }}
+                      style={{ background: "none", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "20px", color: "#888", padding: "8px 20px", cursor: "pointer", fontSize: "13px", fontFamily: "inherit" }}>
+                      Limpiar filtros
+                    </button>
                   </div>
                 ) : (
                   <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "14px" }}>
-                    {filtered.map(g => (
-                      <GuideCard key={g.id} guide={g} completed={completed.includes(g.id)} onClick={setActiveGuide} />
-                    ))}
+                    {filtered.map(g => <GuideCard key={g.id} guide={g} completed={completed.includes(g.id)} onClick={openGuide} />)}
                   </div>
                 )}
               </>
@@ -536,17 +808,24 @@ export default function App() {
           </div>
         )}
 
+        {/* CALCULADORAS */}
+        {tab === "calc" && <CalculadorasView />}
+
+        {/* CHAT */}
         {tab === "chat" && (
           <div style={{ animation: "fadeIn 0.3s ease" }}>
-            {!apiKey && (
-              <div style={{ background: "rgba(255,107,53,0.1)", border: "1px solid rgba(255,107,53,0.25)", borderRadius: "14px", padding: "16px 20px", marginBottom: "20px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
-                <div style={{ color: "#ccc", fontSize: "14px" }}>🔑 Necesitas una API key para usar el chat</div>
-                <button onClick={() => setShowApiModal(true)} style={{ background: "#FF6B35", border: "none", borderRadius: "10px", color: "#fff", padding: "9px 16px", cursor: "pointer", fontSize: "13px", fontWeight: "600", whiteSpace: "nowrap" }}>Configurar</button>
+            {!apiKey ? (
+              <div style={{ background: "rgba(255,107,53,0.08)", border: "1px solid rgba(255,107,53,0.2)", borderRadius: "14px", padding: "20px", marginBottom: "20px", textAlign: "center" }}>
+                <div style={{ fontSize: "2rem", marginBottom: "10px" }}>🔑</div>
+                <div style={{ color: "#ccc", fontSize: "15px", marginBottom: "14px", fontWeight: "500" }}>Configura tu API key para usar el chat</div>
+                <button onClick={() => setShowApiModal(true)} style={{ background: "#FF6B35", border: "none", borderRadius: "12px", color: "#fff", padding: "12px 24px", cursor: "pointer", fontSize: "14px", fontWeight: "600", fontFamily: "inherit" }}>
+                  Configurar API key
+                </button>
+                <p style={{ margin: "12px 0 0", color: "#555", fontSize: "12px" }}>Obtén tu key gratuita en console.anthropic.com</p>
               </div>
-            )}
-            {apiKey && (
+            ) : (
               <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "12px" }}>
-                <button onClick={() => setShowApiModal(true)} style={{ background: "none", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "10px", color: "#555", padding: "6px 12px", cursor: "pointer", fontSize: "12px", fontFamily: "inherit" }}>🔑 Cambiar API key</button>
+                <button onClick={() => setShowApiModal(true)} style={{ background: "none", border: "1px solid rgba(255,255,255,0.09)", borderRadius: "10px", color: "#555", padding: "6px 12px", cursor: "pointer", fontSize: "12px", fontFamily: "inherit" }}>🔑 Cambiar API key</button>
               </div>
             )}
             <ChatView comunidad={comunidad} apiKey={apiKey} onNeedKey={() => setShowApiModal(true)} />
