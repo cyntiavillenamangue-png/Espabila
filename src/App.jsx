@@ -172,6 +172,72 @@ const GUIDES = [
       { title: "Fintech para ahorrar", body: "Apps como Fintonic o Finary te ayudan a ver todos tus bancos juntos y analizar gastos. Muchos bancos también tienen 'Metas de ahorro' automatizadas. Automatizar el ahorro (transferencia automática el día del sueldo) funciona mejor que ahorrar lo que sobra." },
     ]
   },
+  {
+    id: "inversion", emoji: "📈", title: "Invertir desde Cero", color: "#06D6A0", tag: "Finanzas",
+    related: ["banco", "jubilacion", "renta"],
+    steps: [
+      { title: "¿Por qué invertir siendo joven?", body: "El interés compuesto hace que 100€/mes desde los 22 años valgan más que 300€/mes desde los 40. El tiempo es tu mayor ventaja. Dejar el dinero en el banco pierde poder adquisitivo con la inflación." },
+      { title: "Fondos indexados (la opción más sencilla)", body: "Un fondo indexado replica un índice como el S&P 500 o el MSCI World. Sin gestión activa → comisiones muy bajas (~0,2%). Históricamente dan un 7-10% anual de media. Son la opción recomendada para principiantes." },
+      { title: "ETFs vs fondos de inversión", body: "Los ETFs se compran como acciones (en el momento) y tienen traspaso con tributación. Los fondos de inversión permiten traspasar entre fondos sin pagar impuestos hasta que retiras. Para largo plazo, los fondos tienen ventaja fiscal en España." },
+      { title: "Dónde invertir: brokers", body: "MyInvestor, Indexa Capital y Finizens son populares en España para fondos indexados con bajas comisiones. Para ETFs: DEGIRO o Interactive Brokers. Evita bancos tradicionales: sus comisiones se comen la rentabilidad." },
+      { title: "Impuestos sobre inversiones", body: "Las ganancias al vender tributan como rendimientos del capital mobiliario: 19% hasta 6.000€, 21% de 6.000€ a 50.000€, 23% hasta 200.000€ y 27% por encima. Si tienes pérdidas puedes compensarlas con ganancias del mismo año o los 4 siguientes." },
+    ]
+  },
+  {
+    id: "salud_mental", emoji: "🧠", title: "Salud Mental", color: "#9B5DE5", tag: "Bienestar",
+    related: ["laboral", "ss", "becas"],
+    steps: [
+      { title: "Psicólogo público en España", body: "Puedes acceder a psicólogo clínico a través de tu médico de cabecera (derivación). La espera puede ser de meses. Muchas CCAA tienen programas de atención psicológica urgente o para jóvenes con esperas más cortas." },
+      { title: "Baja por salud mental", body: "La ansiedad, la depresión y el burnout dan derecho a baja laboral igual que cualquier enfermedad física. Habla con tu médico con honestidad. El primer día no se cobra; del 4º al 20º lo paga la empresa; después, la SS." },
+      { title: "Opciones de terapia privada", body: "Un psicólogo privado cuesta entre 50-80€/sesión. Hay opciones más asequibles: colegios de psicólogos con escala de precios por renta, asociaciones universitarias, plataformas online (Ifeel, Buencoco) desde 35€/sesión." },
+      { title: "Burnout: qué es y qué hacer", body: "El burnout o síndrome del trabajador quemado es reconocido por la OMS como enfermedad laboral. Síntomas: agotamiento extremo, cinismo hacia el trabajo, baja eficacia. Tienes derecho a baja médica y, si es por causas laborales, puedes reclamarlo." },
+      { title: "Recursos gratuitos", body: "Teléfono de la Esperanza: 717 003 717. Línea de atención a conducta suicida: 024 (gratuita, 24h). Many CCAA tienen líneas de atención psicológica gratuitas. La app Woebot ofrece apoyo cognitivo-conductual basado en IA de forma gratuita." },
+    ]
+  },
+  {
+    id: "contenido", emoji: "📲", title: "Creadores de Contenido", color: "#FF6B35", tag: "Trabajo",
+    related: ["autonomo", "renta", "banca"],
+    steps: [
+      { title: "¿A partir de cuándo declaro?", body: "Cualquier ingreso por contenido (YouTube, Instagram, TikTok, Twitch, Patreon…) debe declararse. No hay mínimo exento. Si superas los 1.000€/año estás obligado a declararlo aunque no te hayan enviado ningún documento." },
+      { title: "Alta como autónomo", body: "Si generas ingresos de forma habitual (no puntual), debes darte de alta en Hacienda (modelo 036) y en el RETA. La tarifa plana de 80€/mes aplica también aquí. Si tus ingresos son muy bajos, consulta si puedes acogerte a la cotización mínima por tramos." },
+      { title: "Cómo tributan los ingresos", body: "YouTube AdSense, sponsorships y donaciones de Twitch: son rendimientos de actividad económica. Tributan en el IRPF y llevan IVA (21%) si el pagador es español. Si es empresa extranjera (Google, Meta…) no llevan IVA pero sí IRPF." },
+      { title: "Gastos deducibles como creador", body: "Cámara, micrófono, ring light, equipo de edición, suscripciones de software (Adobe, Canva Pro), parte proporcional del móvil e internet, formación relacionada, desplazamientos para crear contenido. Guarda siempre facturas." },
+      { title: "Contratos con marcas", body: "Antes de hacer un post de pago, firma siempre un contrato. Que incluya: importe, forma de pago, uso de imagen, exclusividad, número de publicaciones y fecha. La CNMC obliga a etiquetar contenido pagado con #publi o #ad claramente visible." },
+    ]
+  },
+  {
+    id: "piso_compartido", emoji: "🤝", title: "Piso Compartido", color: "#FFD166", tag: "Vivienda",
+    related: ["alquiler", "padron", "banco"],
+    steps: [
+      { title: "Contrato de habitación vs alquiler", body: "Si alquilas solo una habitación, el contrato es de 'arrendamiento de uso distinto al de vivienda'. Tiene menos protecciones que el contrato de vivienda completa: el propietario puede exigirte salir con solo 15-30 días de preaviso según lo firmado." },
+      { title: "La fianza en habitación", body: "Suele ser 1 mes de habitación (a veces 2). No está regulada por ley igual que en vivienda completa, así que lo que firmes en el contrato manda. Haz fotos de tu habitación y zonas comunes al entrar." },
+      { title: "Empadronarte en piso compartido", body: "Puedes empadronarte en cualquier dirección donde residas, aunque sea habitación alquilada. El propietario debe autorizarlo. Si se niega, el ayuntamiento puede hacer una inspección y empadronarte igualmente." },
+      { title: "Convivencia y gastos", body: "Define por escrito desde el primer día: ¿Quién paga los suministros? ¿Cómo se divide la compra? ¿Hay normas de limpieza? Usa Splitwise o Tricount para los gastos compartidos. La mayoría de conflictos entre compis vienen de no haberlo hablado antes." },
+      { title: "Cómo salir del piso", body: "Avisa con el tiempo de preaviso del contrato (normalmente 15-30 días). Haz un inventario de salida. Si el propietario te descontó cosas de la fianza de forma injusta, puedes reclamar por vía civil. Guarda siempre los justificantes de pago." },
+    ]
+  },
+  {
+    id: "plataformas", emoji: "🛵", title: "Trabajo en Plataformas", color: "#F77F00", tag: "Trabajo",
+    related: ["autonomo", "laboral", "ss"],
+    steps: [
+      { title: "La Ley Rider (2021)", body: "La Ley Rider presume que los repartidores de plataformas (Glovo, Uber Eats, Deliveroo…) son trabajadores por cuenta ajena, no autónomos. Si trabajas en una plataforma y cumples los criterios, tienes derecho a ser contratado como empleado." },
+      { title: "TRADE: autónomo económicamente dependiente", body: "Si más del 75% de tus ingresos vienen de un solo cliente (plataforma), puedes ser un TRADE. Esto te da derechos adicionales: vacaciones, baja por enfermedad con prestación desde el primer día, indemnización por extinción de contrato." },
+      { title: "Cómo reclamar tus derechos", body: "Si crees que eres falso autónomo, puedes denunciar a la Inspección de Trabajo (de forma anónima). También puedes demandar a la plataforma para que te reconozca como trabajador. Organizaciones como Riders x Derechos ofrecen asesoramiento gratuito." },
+      { title: "Economía colaborativa y alquiler", body: "Alquilar tu piso en Airbnb o tu coche puede requerir licencia turística (según ayuntamiento). Los ingresos deben declararse en la renta. Si alquilas por habitaciones, las plataformas están obligadas a comunicar tus ingresos a Hacienda desde 2024." },
+      { title: "Acciones y propinas digitales", body: "Las propinas en Twitch (Bits, suscripciones) o Ko-fi son rendimientos de actividad económica aunque parezcan donaciones. Las opciones de acciones o stock options de startups tributan como rendimiento del trabajo cuando las ejerces." },
+    ]
+  },
+  {
+    id: "teletrabajo", emoji: "💻", title: "Teletrabajo y Trabajo Remoto", color: "#4CC9F0", tag: "Trabajo",
+    related: ["laboral", "autonomo", "renta"],
+    steps: [
+      { title: "Tus derechos en teletrabajo", body: "La Ley de Trabajo a Distancia (2021) dice que si teletrabajas más del 30% del tiempo, la empresa debe firmar un acuerdo contigo, pagar los gastos de conexión y equipamiento, y respetar tu derecho a la desconexión digital." },
+      { title: "Gastos de teletrabajo", body: "La empresa debe compensarte el coste proporcional de internet, electricidad y los equipos necesarios. Si no lo hace, puedes reclamarlo. Como autónomo puedes deducir hasta el 30% del IRPF e IVA de suministros de tu vivienda habitual si trabajas desde casa." },
+      { title: "Nómada digital en España", body: "Desde 2023 existe el visado de nómada digital para extranjeros que trabajen remotamente. Para españoles que trabajan para empresas extranjeras: tributas en España si resides más de 183 días al año aquí, independientemente de dónde esté tu empresa." },
+      { title: "Régimen Beckham (impatriados)", body: "Si te contratan desde el extranjero para trabajar en España o vuelves tras vivir fuera más de 5 años, puedes optar al régimen de impatriados: tributas al tipo fijo del 24% sobre rentas del trabajo en vez de la escala progresiva, hasta 600.000€/año." },
+      { title: "Desconexión digital: tu derecho", body: "Tienes derecho legal a no contestar mensajes o emails fuera de tu horario laboral. La empresa debe tener una política de desconexión digital por escrito. Si te presionan fuera de horario, es una infracción laboral denunciable a la Inspección de Trabajo." },
+    ]
+  },
 ];
 
 const TIPS = [
@@ -192,6 +258,13 @@ const TIPS = [
   "💡 Activa la autenticación en dos pasos en tu banco. Es el mejor seguro contra fraude digital.",
   "💡 Si tienes 200€ al mes de margen, una transferencia automática a ahorro el día del sueldo evita gastarlo sin darte cuenta.",
   "💡 Cualquier trabajador puede consultar su convenio colectivo gratis en el BOE.",
+  "💡 Si haces contenido pagado con marcas, etiquétalo siempre con #publi o #ad. Es obligatorio por ley.",
+  "💡 Los fondos indexados (MSCI World, S&P 500) son la forma más sencilla de invertir a largo plazo para principiantes.",
+  "💡 Puedes teletrabajar desde cualquier sitio de España, pero si lo haces más del 30% del tiempo, tu empresa debe firmarte un acuerdo.",
+  "💡 Si eres rider o trabajas en plataformas, tienes derecho a ser contratado como empleado gracias a la Ley Rider.",
+  "💡 La baja por ansiedad o depresión es exactamente igual que la de cualquier otra enfermedad. Habla con tu médico.",
+  "💡 Las ganancias de criptomonedas también tributan. Debes declararlas aunque no hayas retirado a euros.",
+  "💡 Ingresos de Twitch, YouTube o Patreon son actividad económica. Si superan 1.000€/año debes declararlos.",
 ];
 
 // --- Utilidades IRPF / SS ---
@@ -707,6 +780,86 @@ function CalcHipoteca() {
   );
 }
 
+function CalcInversion() {
+  const [aporte, setAporte] = useState(200);
+  const [anos, setAnos] = useState(20);
+  const [rentabilidad, setRentabilidad] = useState(7);
+
+  const meses = anos * 12;
+  const r = rentabilidad / 100 / 12;
+  const totalInvertido = aporte * meses;
+  const valorFinal = r > 0
+    ? aporte * ((Math.pow(1 + r, meses) - 1) / r)
+    : totalInvertido;
+  const ganancias = valorFinal - totalInvertido;
+  const multiplicador = (valorFinal / totalInvertido).toFixed(1);
+
+  const barW = (totalInvertido / valorFinal) * 100;
+
+  return (
+    <div>
+      <h3 style={{ margin: "0 0 6px", fontSize: "18px", color: "#fff" }}>📈 Calculadora de Inversión</h3>
+      <p style={{ margin: "0 0 24px", color: "#666", fontSize: "13px" }}>El interés compuesto es la octava maravilla del mundo. Cuanto antes empieces, más tiempo trabaja por ti.</p>
+
+      {[
+        { label: "Aportación mensual", val: aporte, set: setAporte, min: 25, max: 2000, step: 25, color: "#06D6A0", unit: "€/mes" },
+      ].map(({ label, val, set, min, max, step, color, unit }) => (
+        <div key={label} style={{ marginBottom: "20px" }}>
+          <label style={{ fontSize: "12px", color: "#666", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: "8px" }}>{label}</label>
+          <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "4px" }}>
+            <input type="range" min={min} max={max} step={step} value={val} onChange={e => set(+e.target.value)} style={{ flex: 1, accentColor: color, cursor: "pointer" }} />
+            <div style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "10px", padding: "8px 14px", minWidth: "130px", textAlign: "center" }}>
+              <input type="number" value={val} onChange={e => set(Math.max(min, Math.min(max, +e.target.value || min)))} style={{ background: "none", border: "none", color, fontSize: "15px", fontWeight: "700", fontFamily: "inherit", width: "70px", textAlign: "center", outline: "none" }} />
+              <span style={{ color: "#666", fontSize: "12px" }}> {unit}</span>
+            </div>
+          </div>
+        </div>
+      ))}
+
+      <div style={{ display: "flex", gap: "12px", marginBottom: "24px" }}>
+        <div style={{ flex: 1 }}>
+          <label style={{ fontSize: "12px", color: "#666", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: "8px" }}>Años invirtiendo</label>
+          <div style={{ display: "flex", gap: "5px" }}>
+            {[10, 15, 20, 30].map(p => (
+              <button key={p} onClick={() => setAnos(p)} style={{ flex: 1, padding: "10px 4px", border: "none", borderRadius: "8px", background: anos === p ? "#06D6A0" : "rgba(255,255,255,0.06)", color: anos === p ? "#111" : "#666", cursor: "pointer", fontSize: "13px", fontFamily: "inherit", fontWeight: anos === p ? "700" : "400" }}>{p}</button>
+            ))}
+          </div>
+        </div>
+        <div style={{ flex: 1 }}>
+          <label style={{ fontSize: "12px", color: "#666", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: "8px" }}>Rentabilidad anual</label>
+          <div style={{ display: "flex", gap: "5px" }}>
+            {[5, 7, 9, 11].map(t => (
+              <button key={t} onClick={() => setRentabilidad(t)} style={{ flex: 1, padding: "10px 4px", border: "none", borderRadius: "8px", background: rentabilidad === t ? "#06D6A0" : "rgba(255,255,255,0.06)", color: rentabilidad === t ? "#111" : "#666", cursor: "pointer", fontSize: "13px", fontFamily: "inherit", fontWeight: rentabilidad === t ? "700" : "400" }}>{t}%</button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Barra visual */}
+      <div style={{ marginBottom: "16px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", fontSize: "11px", color: "#555", marginBottom: "6px" }}>
+          <span>Lo que pones tú</span><span>Intereses generados</span>
+        </div>
+        <div style={{ height: "10px", borderRadius: "5px", background: "rgba(255,255,255,0.08)", overflow: "hidden" }}>
+          <div style={{ height: "100%", width: `${barW}%`, background: "#06D6A0", borderRadius: "5px", transition: "width 0.5s ease" }} />
+        </div>
+        <div style={{ display: "flex", justifyContent: "space-between", fontSize: "11px", color: "#555", marginTop: "4px" }}>
+          <span style={{ color: "#06D6A0" }}>{fmt(totalInvertido)}</span>
+          <span style={{ color: "#FFD166" }}>{fmt(ganancias)}</span>
+        </div>
+      </div>
+
+      <div style={{ background: "linear-gradient(135deg, rgba(6,214,160,0.15), rgba(6,214,160,0.05))", border: "1px solid rgba(6,214,160,0.25)", borderRadius: "14px", padding: "20px 22px" }}>
+        <div style={{ fontSize: "12px", color: "#06D6A0", letterSpacing: "1px", textTransform: "uppercase", marginBottom: "6px" }}>Valor final estimado</div>
+        <div style={{ fontSize: "36px", fontWeight: "800", color: "#fff", fontFamily: "'Syne', sans-serif" }}>{fmt(valorFinal)}</div>
+        <div style={{ fontSize: "13px", color: "#888", marginTop: "6px" }}>
+          ×{multiplicador} lo invertido · {fmt(ganancias)} de intereses compuestos
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function CalculadorasView() {
   const [calc, setCalc] = useState("nomina");
   const calcs = [
@@ -714,18 +867,20 @@ function CalculadorasView() {
     { id: "autonomo", label: "🧾 Autónomo" },
     { id: "alquiler", label: "🏠 Alquiler" },
     { id: "hipoteca", label: "🏗️ Hipoteca" },
+    { id: "inversion", label: "📈 Inversión" },
   ];
   return (
     <div style={{ animation: "fadeIn 0.3s ease" }}>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4px", marginBottom: "28px", background: "rgba(255,255,255,0.04)", padding: "4px", borderRadius: "12px" }}>
         {calcs.map(t => (
-          <button key={t.id} onClick={() => setCalc(t.id)} style={{ padding: "10px", border: "none", borderRadius: "8px", background: calc === t.id ? "rgba(255,255,255,0.1)" : "transparent", color: calc === t.id ? "#fff" : "#666", fontWeight: calc === t.id ? "600" : "400", cursor: "pointer", fontSize: "13px", fontFamily: "inherit", transition: "all 0.2s" }}>{t.label}</button>
+          <button key={t.id} onClick={() => setCalc(t.id)} style={{ padding: "10px", border: "none", borderRadius: "8px", background: calc === t.id ? "rgba(255,255,255,0.1)" : "transparent", color: calc === t.id ? "#fff" : "#666", fontWeight: calc === t.id ? "600" : "400", cursor: "pointer", fontSize: "12px", fontFamily: "inherit", transition: "all 0.2s" }}>{t.label}</button>
         ))}
       </div>
       {calc === "nomina" && <CalcNomina />}
       {calc === "autonomo" && <CalcAutonomo />}
       {calc === "alquiler" && <CalcAlquiler />}
       {calc === "hipoteca" && <CalcHipoteca />}
+      {calc === "inversion" && <CalcInversion />}
       <p style={{ margin: "20px 0 0", fontSize: "12px", color: "#444", textAlign: "center", lineHeight: 1.5 }}>
         Cálculo orientativo. Para casos comunes sin deducciones especiales. Consulta a un gestor para tu situación concreta.
       </p>
@@ -746,12 +901,12 @@ function ChatView({ comunidad, apiKey, onNeedKey }) {
   useEffect(() => { setUsingFree(!apiKey); }, [apiKey]);
 
   const SUGGESTIONS = [
-    "¿Cuándo tengo que hacer la renta?", "¿Cómo pido una beca universitaria?",
-    "¿Qué necesito para ser autónomo?", "¿Cómo funciona la hipoteca?",
-    "¿Qué derechos tengo en el trabajo?", "¿Cómo consigo el NIE?",
+    "¿Cuándo tengo que hacer la renta?", "¿Cómo declaro ingresos de YouTube o Twitch?",
+    "¿Qué necesito para ser autónomo?", "¿Puedo invertir con poco dinero?",
+    "¿Qué derechos tengo en teletrabajo?", "¿Cómo pido la baja por ansiedad?",
   ];
 
-  const systemPrompt = `Eres Espabila, un asistente experto en trámites, impuestos, finanzas personales, educación, derechos laborales y gestiones administrativas en España, especialmente para jóvenes.${comunidad !== "Todas" ? ` El usuario vive en ${comunidad}, ten en cuenta las particularidades de esa comunidad autónoma.` : ""} Explica de forma clara y cercana, sin tecnicismos. Usa ejemplos concretos con cifras cuando ayude. Puedes usar **negrita** y listas con guiones para organizar la información. Responde siempre en español y de forma concisa.`;
+  const systemPrompt = `Eres Espabila, un asistente experto en trámites, impuestos, finanzas personales, inversiones, salud mental, derechos laborales, economía de plataformas, creadores de contenido, teletrabajo y gestiones administrativas en España, especialmente para la Generación Z.${comunidad !== "Todas" ? ` El usuario vive en ${comunidad}, ten en cuenta las particularidades de esa comunidad autónoma.` : ""} Explica de forma clara, directa y cercana, sin tecnicismos. Usa ejemplos concretos con cifras reales cuando ayude. Puedes usar **negrita** y listas con guiones para organizar la información. Responde siempre en español y de forma concisa. Si el tema tiene implicaciones fiscales o legales, menciona brevemente que conviene verificar con un profesional.`;
 
   const sendWithPollinations = async (msgs) => {
     const res = await fetch("https://text.pollinations.ai/", {
@@ -957,7 +1112,7 @@ export default function App() {
               <h1 style={{ margin: "0 0 6px", fontFamily: "'Syne', sans-serif", fontSize: "clamp(26px, 6vw, 40px)", fontWeight: "800", lineHeight: 1.1 }}>
                 Aprende a ser<br /><span style={{ color: "#FF6B35" }}>adulto</span> en España
               </h1>
-              <p style={{ margin: "10px 0 0", color: "#555", fontSize: "14px" }}>Todo lo que el cole no te enseñó · {GUIDES.length} guías</p>
+              <p style={{ margin: "10px 0 0", color: "#555", fontSize: "14px" }}>Todo lo que nadie te explicó · {GUIDES.length} guías</p>
             </div>
             {/* Progress ring */}
             <div style={{ textAlign: "center", flexShrink: 0 }}>
