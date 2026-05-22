@@ -150,6 +150,12 @@ const TIPS = [
   "💡 Como autónomo nuevo, tienes tarifa plana de 80€/mes el primer año en la SS.",
   "💡 Revisa tu vida laboral al menos una vez al año para detectar errores de cotización.",
   "💡 Antes de firmar un alquiler, haz fotos de cada habitación y envíalas por email al propietario.",
+  "💡 El seguro del móvil o la garantía extendida casi nunca compensan. Ahorra ese dinero.",
+  "💡 Puedes pedir cita en la Inspección de Trabajo de forma anónima si tu empresa no cumple la ley.",
+  "💡 La cuenta nómina no tiene por qué ser tu banco principal — compara condiciones.",
+  "💡 El plazo para reclamar el finiquito caduca a los 12 meses. No esperes.",
+  "💡 El alquiler no debe superar el 30% de tu sueldo neto para que el presupuesto sea sostenible.",
+  "💡 Compara siempre al menos 3 entidades antes de pedir una hipoteca.",
 ];
 
 // --- Utilidades IRPF / SS ---
@@ -515,16 +521,81 @@ function CalcAutonomo() {
   );
 }
 
+function CalcAlquiler() {
+  const [netoMensual, setNetoMensual] = useState(1800);
+  const [alquiler, setAlquiler] = useState(800);
+
+  const pct = alquiler / netoMensual;
+  const recomendado = Math.round(netoMensual * 0.3);
+  const disponible = netoMensual - alquiler;
+  const semaforo = pct <= 0.30 ? "#2EC4B6" : pct <= 0.40 ? "#FFD166" : "#E63946";
+  const semMsg = pct <= 0.30 ? "Saludable" : pct <= 0.40 ? "Ajustado" : "Demasiado alto";
+
+  const Row = ({ label, value, color, bold }) => (
+    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 0", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+      <span style={{ fontSize: "14px", color: bold ? "#fff" : "#aaa", fontWeight: bold ? "600" : "400" }}>{label}</span>
+      <span style={{ fontSize: "14px", color: color || (bold ? "#fff" : "#ccc"), fontWeight: bold ? "700" : "400" }}>{value}</span>
+    </div>
+  );
+
+  return (
+    <div>
+      <h3 style={{ margin: "0 0 6px", fontSize: "18px", color: "#fff" }}>🏠 Calculadora de Alquiler</h3>
+      <p style={{ margin: "0 0 24px", color: "#666", fontSize: "13px" }}>¿Puedes permitirte ese piso? La regla del 30% dice que el alquiler no debe superar el 30% de tu sueldo neto.</p>
+
+      <label style={{ fontSize: "12px", color: "#666", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: "8px" }}>Tu salario neto mensual</label>
+      <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "8px" }}>
+        <input type="range" min="800" max="5000" step="50" value={netoMensual} onChange={e => setNetoMensual(+e.target.value)} style={{ flex: 1, accentColor: "#A663CC", cursor: "pointer" }} />
+        <div style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "10px", padding: "8px 14px", minWidth: "110px", textAlign: "center" }}>
+          <input type="number" value={netoMensual} onChange={e => setNetoMensual(Math.max(800, Math.min(10000, +e.target.value || 800)))} style={{ background: "none", border: "none", color: "#A663CC", fontSize: "15px", fontWeight: "700", fontFamily: "inherit", width: "90px", textAlign: "center", outline: "none" }} />
+          <span style={{ color: "#666", fontSize: "13px" }}> €/mes</span>
+        </div>
+      </div>
+      <div style={{ display: "flex", justifyContent: "space-between", fontSize: "11px", color: "#444", marginBottom: "24px" }}>
+        <span>800€</span><span>5.000€</span>
+      </div>
+
+      <label style={{ fontSize: "12px", color: "#666", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: "8px" }}>Alquiler mensual</label>
+      <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "8px" }}>
+        <input type="range" min="300" max={Math.round(netoMensual * 0.8)} step="25" value={Math.min(alquiler, Math.round(netoMensual * 0.8))} onChange={e => setAlquiler(+e.target.value)} style={{ flex: 1, accentColor: semaforo, cursor: "pointer" }} />
+        <div style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "10px", padding: "8px 14px", minWidth: "110px", textAlign: "center" }}>
+          <input type="number" value={alquiler} onChange={e => setAlquiler(Math.max(300, Math.min(Math.round(netoMensual * 0.8), +e.target.value || 300)))} style={{ background: "none", border: "none", color: semaforo, fontSize: "15px", fontWeight: "700", fontFamily: "inherit", width: "90px", textAlign: "center", outline: "none" }} />
+          <span style={{ color: "#666", fontSize: "13px" }}> €/mes</span>
+        </div>
+      </div>
+      <div style={{ display: "flex", justifyContent: "space-between", fontSize: "11px", color: "#444", marginBottom: "24px" }}>
+        <span>300€</span><span>{Math.round(netoMensual * 0.8).toLocaleString("es-ES")}€</span>
+      </div>
+
+      <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "14px", padding: "20px 22px", marginBottom: "16px" }}>
+        <Row label="Salario neto mensual" value={fmt(netoMensual)} bold />
+        <Row label="Alquiler mensual" value={`− ${fmt(alquiler)}`} color={semaforo} />
+        <Row label="Alquiler máximo recomendado (30%)" value={fmt(recomendado)} color="#555" />
+        <Row label="Dinero restante" value={fmt(disponible)} bold />
+      </div>
+
+      <div style={{ background: `linear-gradient(135deg, ${semaforo}22, ${semaforo}08)`, border: `1px solid ${semaforo}44`, borderRadius: "14px", padding: "20px 22px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "8px" }}>
+          <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: semaforo, flexShrink: 0 }} />
+          <div style={{ fontSize: "12px", color: semaforo, letterSpacing: "1px", textTransform: "uppercase", fontWeight: "700" }}>{semMsg}</div>
+        </div>
+        <div style={{ fontSize: "36px", fontWeight: "800", color: "#fff", fontFamily: "'Syne', sans-serif" }}>{(pct * 100).toFixed(0)}%</div>
+        <div style={{ fontSize: "13px", color: "#888", marginTop: "6px" }}>de tu sueldo neto va al alquiler</div>
+      </div>
+    </div>
+  );
+}
+
 function CalculadorasView() {
   const [calc, setCalc] = useState("nomina");
   return (
     <div style={{ animation: "fadeIn 0.3s ease" }}>
       <div style={{ display: "flex", gap: "4px", marginBottom: "28px", background: "rgba(255,255,255,0.04)", padding: "4px", borderRadius: "12px" }}>
-        {[{ id: "nomina", label: "💶 Nómina" }, { id: "autonomo", label: "🧾 Autónomo" }].map(t => (
+        {[{ id: "nomina", label: "💶 Nómina" }, { id: "autonomo", label: "🧾 Autónomo" }, { id: "alquiler", label: "🏠 Alquiler" }].map(t => (
           <button key={t.id} onClick={() => setCalc(t.id)} style={{ flex: 1, padding: "10px", border: "none", borderRadius: "8px", background: calc === t.id ? "rgba(255,255,255,0.1)" : "transparent", color: calc === t.id ? "#fff" : "#666", fontWeight: calc === t.id ? "600" : "400", cursor: "pointer", fontSize: "13px", fontFamily: "inherit", transition: "all 0.2s" }}>{t.label}</button>
         ))}
       </div>
-      {calc === "nomina" ? <CalcNomina /> : <CalcAutonomo />}
+      {calc === "nomina" ? <CalcNomina /> : calc === "autonomo" ? <CalcAutonomo /> : <CalcAlquiler />}
       <p style={{ margin: "20px 0 0", fontSize: "12px", color: "#444", textAlign: "center", lineHeight: 1.5 }}>
         Cálculo orientativo. Para casos comunes sin deducciones especiales. Consulta a un gestor para tu situación concreta.
       </p>
@@ -567,7 +638,7 @@ function ChatView({ comunidad, apiKey, onNeedKey }) {
           "anthropic-dangerous-direct-browser-access": "true",
         },
         body: JSON.stringify({
-          model: "claude-sonnet-4-5",
+          model: "claude-sonnet-4-6",
           max_tokens: 1024,
           system: `Eres un asistente experto en trámites, impuestos, finanzas personales, educación, derechos laborales y gestiones administrativas en España, especialmente para jóvenes.${comunidad !== "Todas" ? ` El usuario vive en ${comunidad}, ten en cuenta las particularidades de esa comunidad autónoma.` : ""} Explica de forma clara y cercana, sin tecnicismos. Usa ejemplos concretos con cifras. Puedes usar **negrita** y listas con guiones para organizar la información. Responde siempre en español y de forma concisa.`,
           messages: newMessages.map(m => ({ role: m.role, content: m.content }))
