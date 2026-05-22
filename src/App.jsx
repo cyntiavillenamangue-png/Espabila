@@ -139,6 +139,39 @@ const GUIDES = [
       { title: "Tarjeta de residencia (TIE)", body: "La TIE es el documento físico que acredita tu situación. Debes renovarla antes de que caduque (suele ser anual los primeros años). No renovarla puede generar problemas legales graves." },
     ]
   },
+  {
+    id: "sanidad", emoji: "🩺", title: "Sanidad Pública", color: "#E63946", tag: "Gestiones",
+    related: ["ss", "padron", "laboral"],
+    steps: [
+      { title: "La tarjeta sanitaria", body: "La tarjeta sanitaria individual (TSI) te da acceso a toda la red pública. Si trabajas o cotizas a la SS, la tienes automáticamente. Pídela en el centro de salud de tu zona con el padrón y el número de la SS." },
+      { title: "El médico de cabecera", body: "Es tu puerta de entrada al sistema. Te derivan a especialistas, te dan bajas y recetas. Llama o usa la app de tu comunidad para pedir cita. En urgencias solo ve si realmente es urgente." },
+      { title: "Urgencias vs urgencias reales", body: "Las urgencias del hospital están saturadas. Para problemas menores (fiebre, cortes, esguinces) ve al PAC (Punto de Atención Continuada) o centro de salud. Reserva urgencias para situaciones graves." },
+      { title: "Recetas y medicamentos", body: "Con receta electrónica el médico carga el medicamento en tu historial. El precio en farmacia depende de tu nivel de renta (copago). Activos laborales pagan entre el 40% y el 60%; pensionistas con bajos ingresos, gratis." },
+      { title: "Salud mental pública", body: "Puedes pedir derivación al psicólogo clínico a través de tu médico de cabecera. Las esperas son largas (a veces meses). Muchas CCAA tienen programas específicos para jóvenes con sesiones gratuitas o de bajo coste." },
+    ]
+  },
+  {
+    id: "seguros", emoji: "🛡️", title: "Seguros Básicos", color: "#06D6A0", tag: "Finanzas",
+    related: ["alquiler", "hipoteca", "banco"],
+    steps: [
+      { title: "¿Qué seguro necesito?", body: "No todos los seguros son obligatorios. Los esenciales para empezar: seguro de hogar (obligatorio con hipoteca, muy recomendable en alquiler), seguro de salud (si quieres saltarte listas de espera) y seguro de vida (si tienes hipoteca o dependientes)." },
+      { title: "Seguro de hogar en alquiler", body: "Aunque no es obligatorio al alquilar, protege tus cosas ante robo, incendio o daños. Un seguro básico para inquilino cuesta desde 8-15€/mes. El seguro del propietario cubre el edificio, no tus pertenencias." },
+      { title: "Seguro médico privado", body: "Permite evitar listas de espera y elegir médico. Cuesta entre 40-120€/mes según edad y cobertura. Contrata joven: es más barato y no tienen en cuenta enfermedades previas si entras sano." },
+      { title: "Seguro de coche", body: "El seguro a terceros es obligatorio por ley. El todo riesgo compensa si el coche vale más de 8.000€. Compara precios cada año: la fidelidad no premia, cambiar de compañía sí." },
+      { title: "Cómo ahorrar en seguros", body: "Compara en comparadores online (rastreator, acierto…). Paga anualmente (suele ser más barato que mensual). Sube la franquicia para bajar la prima. Nunca contrates sin leer qué excluye la póliza." },
+    ]
+  },
+  {
+    id: "banca", emoji: "📱", title: "Banca Digital", color: "#4CC9F0", tag: "Finanzas",
+    related: ["banco", "autonomo", "renta"],
+    steps: [
+      { title: "Bancos online vs tradicionales", body: "Los bancos 100% online (Revolut, N26, Wise, Bunq) no tienen oficinas pero ofrecen mejores condiciones: sin comisiones, cambio de divisa a precio real, cashback. Los tradicionales dan más seguridad en trámites complejos (hipotecas, gestiones)." },
+      { title: "Revolut para el día a día", body: "Revolut es muy popular en España para jóvenes: sin comisión en pagos internacionales, cambio de divisa sin recargo, tarjeta virtual para compras online y sistema de cuentas compartidas para gastos con amigos." },
+      { title: "Bizum y pagos instantáneos", body: "Bizum está disponible en casi todos los bancos españoles. Permite enviar hasta 1.000€ por transferencia y hasta 500€ acumulados al día. Es instantáneo y gratuito." },
+      { title: "Seguridad en banca online", body: "Usa contraseñas únicas y activa la autenticación en dos pasos. Nunca hagas banca desde redes wifi públicas sin VPN. Tu banco nunca te pedirá la contraseña completa ni las coordenadas por email o SMS." },
+      { title: "Fintech para ahorrar", body: "Apps como Fintonic o Finary te ayudan a ver todos tus bancos juntos y analizar gastos. Muchos bancos también tienen 'Metas de ahorro' automatizadas. Automatizar el ahorro (transferencia automática el día del sueldo) funciona mejor que ahorrar lo que sobra." },
+    ]
+  },
 ];
 
 const TIPS = [
@@ -156,6 +189,9 @@ const TIPS = [
   "💡 El plazo para reclamar el finiquito caduca a los 12 meses. No esperes.",
   "💡 El alquiler no debe superar el 30% de tu sueldo neto para que el presupuesto sea sostenible.",
   "💡 Compara siempre al menos 3 entidades antes de pedir una hipoteca.",
+  "💡 Activa la autenticación en dos pasos en tu banco. Es el mejor seguro contra fraude digital.",
+  "💡 Si tienes 200€ al mes de margen, una transferencia automática a ahorro el día del sueldo evita gastarlo sin darte cuenta.",
+  "💡 Cualquier trabajador puede consultar su convenio colectivo gratis en el BOE.",
 ];
 
 // --- Utilidades IRPF / SS ---
@@ -586,16 +622,110 @@ function CalcAlquiler() {
   );
 }
 
+function CalcHipoteca() {
+  const [precio, setPrecio] = useState(200000);
+  const [entrada, setEntrada] = useState(40000);
+  const [plazo, setPlazo] = useState(30);
+  const [tipo, setTipo] = useState(3.5);
+
+  const prestamo = precio - entrada;
+  const pctEntrada = entrada / precio;
+  const r = tipo / 100 / 12;
+  const n = plazo * 12;
+  const cuota = prestamo > 0 && r > 0 ? prestamo * (r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1) : prestamo / n;
+  const totalPagado = cuota * n;
+  const totalIntereses = totalPagado - prestamo;
+  const gastosCompra = precio * 0.10;
+  const ahorroNecesario = entrada + gastosCompra;
+
+  const Row = ({ label, value, color, bold, sub }) => (
+    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 0", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+      <span style={{ fontSize: "14px", color: bold ? "#fff" : "#aaa", fontWeight: bold ? "600" : "400" }}>
+        {label}
+        {sub && <div style={{ fontSize: "11px", color: "#555", marginTop: "2px" }}>{sub}</div>}
+      </span>
+      <span style={{ fontSize: "14px", color: color || (bold ? "#fff" : "#ccc"), fontWeight: bold ? "700" : "400" }}>{value}</span>
+    </div>
+  );
+
+  return (
+    <div>
+      <h3 style={{ margin: "0 0 6px", fontSize: "18px", color: "#fff" }}>🏗️ Calculadora de Hipoteca</h3>
+      <p style={{ margin: "0 0 24px", color: "#666", fontSize: "13px" }}>Estima tu cuota mensual y el coste total de la hipoteca.</p>
+
+      {[
+        { label: "Precio del inmueble", val: precio, set: setPrecio, min: 50000, max: 800000, step: 5000, color: "#EF476F", unit: "€" },
+        { label: "Entrada (ahorro propio)", val: entrada, set: setEntrada, min: Math.round(precio * 0.05), max: Math.round(precio * 0.5), step: 5000, color: "#FFD166", unit: "€" },
+      ].map(({ label, val, set, min, max, step, color, unit }) => (
+        <div key={label} style={{ marginBottom: "20px" }}>
+          <label style={{ fontSize: "12px", color: "#666", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: "8px" }}>{label}</label>
+          <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "4px" }}>
+            <input type="range" min={min} max={max} step={step} value={Math.min(Math.max(val, min), max)} onChange={e => set(+e.target.value)} style={{ flex: 1, accentColor: color, cursor: "pointer" }} />
+            <div style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "10px", padding: "8px 14px", minWidth: "110px", textAlign: "center" }}>
+              <input type="number" value={val} onChange={e => set(Math.max(min, Math.min(max, +e.target.value || min)))} style={{ background: "none", border: "none", color, fontSize: "15px", fontWeight: "700", fontFamily: "inherit", width: "90px", textAlign: "center", outline: "none" }} />
+              <span style={{ color: "#666", fontSize: "13px" }}> {unit}</span>
+            </div>
+          </div>
+        </div>
+      ))}
+
+      <div style={{ display: "flex", gap: "12px", marginBottom: "24px" }}>
+        <div style={{ flex: 1 }}>
+          <label style={{ fontSize: "12px", color: "#666", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: "8px" }}>Plazo (años)</label>
+          <div style={{ display: "flex", gap: "6px" }}>
+            {[15, 20, 25, 30].map(p => (
+              <button key={p} onClick={() => setPlazo(p)} style={{ flex: 1, padding: "10px 6px", border: "none", borderRadius: "8px", background: plazo === p ? "#EF476F" : "rgba(255,255,255,0.06)", color: plazo === p ? "#fff" : "#666", cursor: "pointer", fontSize: "13px", fontFamily: "inherit", fontWeight: plazo === p ? "700" : "400" }}>{p}</button>
+            ))}
+          </div>
+        </div>
+        <div style={{ flex: 1 }}>
+          <label style={{ fontSize: "12px", color: "#666", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: "8px" }}>Tipo fijo (%)</label>
+          <div style={{ display: "flex", gap: "6px" }}>
+            {[2.5, 3.0, 3.5, 4.0].map(t => (
+              <button key={t} onClick={() => setTipo(t)} style={{ flex: 1, padding: "10px 6px", border: "none", borderRadius: "8px", background: tipo === t ? "#FFD166" : "rgba(255,255,255,0.06)", color: tipo === t ? "#111" : "#666", cursor: "pointer", fontSize: "13px", fontFamily: "inherit", fontWeight: tipo === t ? "700" : "400" }}>{t}%</button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "14px", padding: "20px 22px", marginBottom: "16px" }}>
+        <Row label="Precio del inmueble" value={fmt(precio)} bold />
+        <Row label={`Entrada (${(pctEntrada * 100).toFixed(0)}%)`} value={`− ${fmt(entrada)}`} color="#FFD166" />
+        <Row label="Préstamo hipotecario" value={fmt(prestamo)} />
+        <Row label="Gastos de compra (~10%)" value={fmt(gastosCompra)} color="#E63946" sub="ITP/IVA + notaría + registro" />
+        <Row label="Ahorro mínimo necesario" value={fmt(ahorroNecesario)} bold />
+      </div>
+
+      <div style={{ background: "linear-gradient(135deg, rgba(239,71,111,0.15), rgba(239,71,111,0.05))", border: "1px solid rgba(239,71,111,0.25)", borderRadius: "14px", padding: "20px 22px" }}>
+        <div style={{ fontSize: "12px", color: "#EF476F", letterSpacing: "1px", textTransform: "uppercase", marginBottom: "6px" }}>Cuota mensual</div>
+        <div style={{ fontSize: "36px", fontWeight: "800", color: "#fff", fontFamily: "'Syne', sans-serif" }}>{fmt(cuota)}</div>
+        <div style={{ fontSize: "13px", color: "#888", marginTop: "6px" }}>
+          Total intereses: {fmt(totalIntereses)} · Total pagado: {fmt(totalPagado)}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function CalculadorasView() {
   const [calc, setCalc] = useState("nomina");
+  const calcs = [
+    { id: "nomina", label: "💶 Nómina" },
+    { id: "autonomo", label: "🧾 Autónomo" },
+    { id: "alquiler", label: "🏠 Alquiler" },
+    { id: "hipoteca", label: "🏗️ Hipoteca" },
+  ];
   return (
     <div style={{ animation: "fadeIn 0.3s ease" }}>
-      <div style={{ display: "flex", gap: "4px", marginBottom: "28px", background: "rgba(255,255,255,0.04)", padding: "4px", borderRadius: "12px" }}>
-        {[{ id: "nomina", label: "💶 Nómina" }, { id: "autonomo", label: "🧾 Autónomo" }, { id: "alquiler", label: "🏠 Alquiler" }].map(t => (
-          <button key={t.id} onClick={() => setCalc(t.id)} style={{ flex: 1, padding: "10px", border: "none", borderRadius: "8px", background: calc === t.id ? "rgba(255,255,255,0.1)" : "transparent", color: calc === t.id ? "#fff" : "#666", fontWeight: calc === t.id ? "600" : "400", cursor: "pointer", fontSize: "13px", fontFamily: "inherit", transition: "all 0.2s" }}>{t.label}</button>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4px", marginBottom: "28px", background: "rgba(255,255,255,0.04)", padding: "4px", borderRadius: "12px" }}>
+        {calcs.map(t => (
+          <button key={t.id} onClick={() => setCalc(t.id)} style={{ padding: "10px", border: "none", borderRadius: "8px", background: calc === t.id ? "rgba(255,255,255,0.1)" : "transparent", color: calc === t.id ? "#fff" : "#666", fontWeight: calc === t.id ? "600" : "400", cursor: "pointer", fontSize: "13px", fontFamily: "inherit", transition: "all 0.2s" }}>{t.label}</button>
         ))}
       </div>
-      {calc === "nomina" ? <CalcNomina /> : calc === "autonomo" ? <CalcAutonomo /> : <CalcAlquiler />}
+      {calc === "nomina" && <CalcNomina />}
+      {calc === "autonomo" && <CalcAutonomo />}
+      {calc === "alquiler" && <CalcAlquiler />}
+      {calc === "hipoteca" && <CalcHipoteca />}
       <p style={{ margin: "20px 0 0", fontSize: "12px", color: "#444", textAlign: "center", lineHeight: 1.5 }}>
         Cálculo orientativo. Para casos comunes sin deducciones especiales. Consulta a un gestor para tu situación concreta.
       </p>
@@ -605,13 +735,15 @@ function CalculadorasView() {
 
 function ChatView({ comunidad, apiKey, onNeedKey }) {
   const [messages, setMessages] = useState([
-    { role: "assistant", content: `¡Hola! Soy tu asistente para aprender a ser adulto en España${comunidad !== "Todas" ? ` (${comunidad})` : ""}. Pregúntame sobre impuestos, nóminas, alquileres, becas, contratos, autónomos, jubilación, NIE… ¡lo que necesites!` }
+    { role: "assistant", content: `¡Hola! Soy Espabila, tu asistente para aprender a ser adulto en España${comunidad !== "Todas" ? ` (${comunidad})` : ""}. Pregúntame sobre impuestos, nóminas, alquileres, becas, contratos, autónomos, jubilación, NIE… ¡lo que necesites!` }
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [usingFree, setUsingFree] = useState(!apiKey);
   const bottomRef = useRef(null);
 
   useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: "smooth" }); }, [messages, loading]);
+  useEffect(() => { setUsingFree(!apiKey); }, [apiKey]);
 
   const SUGGESTIONS = [
     "¿Cuándo tengo que hacer la renta?", "¿Cómo pido una beca universitaria?",
@@ -619,41 +751,66 @@ function ChatView({ comunidad, apiKey, onNeedKey }) {
     "¿Qué derechos tengo en el trabajo?", "¿Cómo consigo el NIE?",
   ];
 
+  const systemPrompt = `Eres Espabila, un asistente experto en trámites, impuestos, finanzas personales, educación, derechos laborales y gestiones administrativas en España, especialmente para jóvenes.${comunidad !== "Todas" ? ` El usuario vive en ${comunidad}, ten en cuenta las particularidades de esa comunidad autónoma.` : ""} Explica de forma clara y cercana, sin tecnicismos. Usa ejemplos concretos con cifras cuando ayude. Puedes usar **negrita** y listas con guiones para organizar la información. Responde siempre en español y de forma concisa.`;
+
+  const sendWithPollinations = async (msgs) => {
+    const res = await fetch("https://text.pollinations.ai/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "mistral",
+        messages: [
+          { role: "system", content: systemPrompt },
+          ...msgs.map(m => ({ role: m.role, content: m.content }))
+        ],
+        seed: Math.floor(Math.random() * 9999),
+        private: true,
+      })
+    });
+    if (!res.ok) throw new Error(`Error ${res.status}`);
+    return await res.text();
+  };
+
+  const sendWithAnthropic = async (msgs) => {
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": apiKey,
+        "anthropic-version": "2023-06-01",
+        "anthropic-dangerous-direct-browser-access": "true",
+      },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-6",
+        max_tokens: 1024,
+        system: systemPrompt,
+        messages: msgs.map(m => ({ role: m.role, content: m.content }))
+      })
+    });
+    if (!res.ok) {
+      if (res.status === 401) { onNeedKey(); throw new Error("API key inválida"); }
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error?.message || `Error ${res.status}`);
+    }
+    const data = await res.json();
+    return data.content?.map(b => b.text || "").join("") || "Sin respuesta, intenta de nuevo.";
+  };
+
   const send = async (text) => {
     const msg = text || input;
     if (!msg.trim() || loading) return;
-    if (!apiKey) { onNeedKey(); return; }
     const userMsg = { role: "user", content: msg };
     const newMessages = [...messages, userMsg];
     setMessages(newMessages);
     setInput("");
     setLoading(true);
     try {
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": apiKey,
-          "anthropic-version": "2023-06-01",
-          "anthropic-dangerous-direct-browser-access": "true",
-        },
-        body: JSON.stringify({
-          model: "claude-sonnet-4-6",
-          max_tokens: 1024,
-          system: `Eres un asistente experto en trámites, impuestos, finanzas personales, educación, derechos laborales y gestiones administrativas en España, especialmente para jóvenes.${comunidad !== "Todas" ? ` El usuario vive en ${comunidad}, ten en cuenta las particularidades de esa comunidad autónoma.` : ""} Explica de forma clara y cercana, sin tecnicismos. Usa ejemplos concretos con cifras. Puedes usar **negrita** y listas con guiones para organizar la información. Responde siempre en español y de forma concisa.`,
-          messages: newMessages.map(m => ({ role: m.role, content: m.content }))
-        })
-      });
-      if (!res.ok) {
-        if (res.status === 401) { onNeedKey(); return; }
-        const err = await res.json().catch(() => ({}));
-        throw new Error(err.error?.message || `Error ${res.status}`);
-      }
-      const data = await res.json();
-      const reply = data.content?.map(b => b.text || "").join("") || "Sin respuesta, intenta de nuevo.";
+      const reply = apiKey
+        ? await sendWithAnthropic(newMessages)
+        : await sendWithPollinations(newMessages);
       setMessages(prev => [...prev, { role: "assistant", content: reply }]);
     } catch (e) {
-      setMessages(prev => [...prev, { role: "assistant", content: `Error: ${e.message}` }]);
+      setMessages(prev => [...prev, { role: "assistant", content: `Lo siento, ha ocurrido un error. Inténtalo de nuevo en unos segundos.` }]);
     } finally {
       setLoading(false);
     }
@@ -661,6 +818,19 @@ function ChatView({ comunidad, apiKey, onNeedKey }) {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "calc(100vh - 320px)", minHeight: "400px" }}>
+      {/* Provider badge */}
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "12px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+          <div style={{ width: "7px", height: "7px", borderRadius: "50%", background: "#2EC4B6" }} />
+          <span style={{ fontSize: "12px", color: "#555" }}>
+            {apiKey ? "Claude Sonnet (tu API key)" : "IA gratuita · solo necesitas wifi"}
+          </span>
+        </div>
+        <button onClick={onNeedKey} style={{ background: "none", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "8px", color: "#555", padding: "4px 10px", cursor: "pointer", fontSize: "11px", fontFamily: "inherit" }}>
+          {apiKey ? "🔑 Cambiar key" : "🔑 Usar Claude"}
+        </button>
+      </div>
+
       <div style={{ flex: 1, overflowY: "auto", paddingRight: "4px" }}>
         {messages.map((m, i) => (
           <div key={i} style={{ display: "flex", justifyContent: m.role === "user" ? "flex-end" : "flex-start", marginBottom: "14px", alignItems: "flex-start" }}>
@@ -885,20 +1055,6 @@ export default function App() {
         {/* CHAT */}
         {tab === "chat" && (
           <div style={{ animation: "fadeIn 0.3s ease" }}>
-            {!apiKey ? (
-              <div style={{ background: "rgba(255,107,53,0.08)", border: "1px solid rgba(255,107,53,0.2)", borderRadius: "14px", padding: "20px", marginBottom: "20px", textAlign: "center" }}>
-                <div style={{ fontSize: "2rem", marginBottom: "10px" }}>🔑</div>
-                <div style={{ color: "#ccc", fontSize: "15px", marginBottom: "14px", fontWeight: "500" }}>Configura tu API key para usar el chat</div>
-                <button onClick={() => setShowApiModal(true)} style={{ background: "#FF6B35", border: "none", borderRadius: "12px", color: "#fff", padding: "12px 24px", cursor: "pointer", fontSize: "14px", fontWeight: "600", fontFamily: "inherit" }}>
-                  Configurar API key
-                </button>
-                <p style={{ margin: "12px 0 0", color: "#555", fontSize: "12px" }}>Obtén tu key gratuita en console.anthropic.com</p>
-              </div>
-            ) : (
-              <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "12px" }}>
-                <button onClick={() => setShowApiModal(true)} style={{ background: "none", border: "1px solid rgba(255,255,255,0.09)", borderRadius: "10px", color: "#555", padding: "6px 12px", cursor: "pointer", fontSize: "12px", fontFamily: "inherit" }}>🔑 Cambiar API key</button>
-              </div>
-            )}
             <ChatView comunidad={comunidad} apiKey={apiKey} onNeedKey={() => setShowApiModal(true)} />
           </div>
         )}
