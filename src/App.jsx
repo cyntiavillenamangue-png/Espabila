@@ -15,7 +15,7 @@ const GUIDES = [
       { title: "¿Qué es la renta?", body: "El IRPF (Impuesto sobre la Renta de las Personas Físicas) es lo que pagas según tus ingresos anuales. Hacienda hace una estimación y tú corriges si pagaste de más o de menos." },
       { title: "¿Estoy obligado a declarar?", body: "Si ganaste más de 22.000€ de un pagador, o más de 15.000€ de varios pagadores, estás obligado. Por debajo puedes hacerla igualmente si te sale a devolver." },
       { title: "Cómo acceder al borrador", body: "Entra en la web de la AEAT (agenciatributaria.gob.es), accede con Cl@ve o certificado digital y descarga tu borrador. Revísalo siempre antes de confirmarlo." },
-      { title: "Desgravaciones clave", body: "Vivienda habitual, aportaciones a planes de pensiones, donativos, alquiler (según CCAA), discapacidad, hijos… No te saltes estas deducciones, pueden suponer cientos de euros." },
+      { title: "Desgravaciones clave", body: "Alquiler (según CCAA), donativos, discapacidad, planes de pensiones… No te saltes estas deducciones, pueden suponer cientos de euros." },
       { title: "¿Sale a devolver o a pagar?", body: "Si te retuvieron más de lo que debes → te devuelven. Si retuvieron menos → pagas. Puedes domiciliar el pago o fraccionar en dos plazos (junio y noviembre)." },
     ]
   },
@@ -24,15 +24,15 @@ const GUIDES = [
     related: ["renta", "laboral", "ss"],
     steps: [
       { title: "Salario bruto vs neto", body: "El bruto es lo que negocias. El neto es lo que ves en tu cuenta. La diferencia son las cotizaciones a la Seguridad Social y la retención del IRPF." },
-      { title: "Cotizaciones a la SS", body: "Pagas un ~6,35% de tu salario bruto a la Seguridad Social. Esto te da derecho a sanidad, paro, jubilación y bajas. No es un impuesto, es una aportación a tu futuro." },
+      { title: "Cotizaciones a la SS", body: "Pagas un ~6,35% de tu salario bruto a la Seguridad Social. Esto te da derecho a sanidad, paro y bajas. No es un impuesto, es una aportación a tu futuro." },
       { title: "Retención del IRPF", body: "Tu empresa te retiene un % según tu salario estimado anual. Si tienes hijos, discapacidad, segunda actividad, etc., rellena el modelo 145 para ajustar la retención." },
       { title: "Pagas extras", body: "Por ley tienes derecho a dos pagas extras al año (junio y Navidad). Pueden estar prorrateadas en 12 mensualidades o pagarse en fechas concretas según convenio." },
-      { title: "Conceptos en la nómina", body: "Salario base + complementos = devengos. Menos retenciones e SS = líquido a percibir. Guarda siempre todas tus nóminas." },
+      { title: "Conceptos en la nómina", body: "Salario base + complementos = devengos. Menos retenciones e SS = líquido a percibir. Guarda siempre todas tus nóminas en una carpeta digital." },
     ]
   },
   {
     id: "alquiler", emoji: "🏠", title: "Alquilar un Piso", color: "#A663CC", tag: "Vivienda",
-    related: ["padron", "banco", "hipoteca"],
+    related: ["piso_compartido", "banco", "renta"],
     steps: [
       { title: "El contrato de alquiler", body: "Por ley, la duración mínima es 5 años (7 si el arrendador es empresa). Antes de firmar, léelo entero. Fíjate en la fianza, el IPC y quién paga los suministros." },
       { title: "La fianza", body: "Es obligatoria por ley: equivale a 1 mes de renta. El propietario debe depositarla en el organismo autonómico. Te la deben devolver al salir si todo está bien." },
@@ -42,61 +42,29 @@ const GUIDES = [
     ]
   },
   {
+    id: "piso_compartido", emoji: "🤝", title: "Piso Compartido", color: "#FFD166", tag: "Vivienda",
+    related: ["alquiler", "banco", "ss"],
+    steps: [
+      { title: "Contrato de habitación vs alquiler", body: "Si alquilas solo una habitación, el contrato es de 'arrendamiento de uso distinto al de vivienda'. Tiene menos protecciones que el contrato de vivienda completa: el propietario puede exigirte salir con solo 15-30 días de preaviso según lo firmado." },
+      { title: "La fianza en habitación", body: "Suele ser 1 mes de habitación (a veces 2). No está regulada por ley igual que en vivienda completa, así que lo que firmes en el contrato manda. Haz fotos de tu habitación y zonas comunes al entrar." },
+      { title: "Empadronarte en piso compartido", body: "Puedes empadronarte en cualquier dirección donde residas, aunque sea habitación alquilada. El propietario debe autorizarlo. Si se niega, el ayuntamiento puede hacer una inspección y empadronarte igualmente." },
+      { title: "Convivencia y gastos", body: "Define por escrito desde el primer día: ¿Quién paga los suministros? ¿Cómo se divide la compra? ¿Hay normas de limpieza? Usa Splitwise o Tricount para los gastos compartidos. La mayoría de conflictos vienen de no haberlo hablado antes." },
+      { title: "Cómo salir del piso", body: "Avisa con el tiempo de preaviso del contrato (normalmente 15-30 días). Haz un inventario de salida. Si el propietario te descontó cosas de la fianza de forma injusta, puedes reclamar por vía civil. Guarda siempre los justificantes de pago." },
+    ]
+  },
+  {
     id: "ss", emoji: "🏥", title: "Seguridad Social", color: "#E63946", tag: "Gestiones",
     related: ["nomina", "laboral", "autonomo"],
     steps: [
       { title: "Alta en la Seguridad Social", body: "Tu empresa te da de alta automáticamente cuando empiezas a trabajar. Si eres autónomo, debes darte de alta tú mismo en el régimen especial (RETA)." },
-      { title: "Tu médico de cabecera", body: "Con el número de la SS puedes pedir tu tarjeta sanitaria en el centro de salud de tu zona. Es gratuita y te da acceso a toda la sanidad pública." },
+      { title: "Tu tarjeta sanitaria", body: "Con el número de la SS puedes pedir tu tarjeta sanitaria en el centro de salud de tu zona. Es gratuita y te da acceso a toda la sanidad pública." },
       { title: "La baja por enfermedad", body: "Si te pones enfermo, el médico te da el parte de baja. Los 3 primeros días no cobras. Del 4º al 20º día cobra la empresa; después, la SS." },
       { title: "El paro (desempleo)", body: "Si te despiden o termina tu contrato, tienes derecho a paro si cotizaste al menos 360 días en los últimos 6 años. Solicítalo en el SEPE en los primeros 15 días hábiles." },
       { title: "Vida laboral", body: "Puedes descargar tu informe de vida laboral en la Sede Electrónica de la SS. Muestra todos tus empleos y cotizaciones. Revísalo para detectar errores." },
     ]
   },
   {
-    id: "padron", emoji: "📋", title: "Padrón Municipal", color: "#F4A261", tag: "Gestiones",
-    related: ["alquiler", "nie", "ss"],
-    steps: [
-      { title: "¿Qué es el padrón?", body: "Es el registro de dónde vives. Empadronarte es obligatorio y gratis. Define qué ayuntamiento te da servicios: sanidad, cole, ayudas, etc." },
-      { title: "Cómo empadronarse", body: "Ve al ayuntamiento con DNI y prueba de domicilio (contrato de alquiler o autorización del propietario). También se puede hacer online en muchos ayuntamientos." },
-      { title: "Para qué sirve", body: "Necesitas el certificado de empadronamiento para: pedir el médico, matricular a los niños, solicitar ayudas sociales, votar, y muchos trámites administrativos." },
-      { title: "Cambio de domicilio", body: "Cada vez que te mudes debes actualizar el padrón. Tienes hasta 3 meses desde el cambio de residencia para hacerlo." },
-    ]
-  },
-  {
-    id: "banco", emoji: "💳", title: "Finanzas Personales", color: "#06D6A0", tag: "Finanzas",
-    related: ["jubilacion", "nomina", "alquiler"],
-    steps: [
-      { title: "Elige bien tu banco", body: "Compara comisiones de mantenimiento, transferencias y cajeros. Los bancos online (Revolut, N26) suelen tener mejores condiciones para jóvenes." },
-      { title: "El fondo de emergencia", body: "Intenta tener entre 3 y 6 meses de gastos ahorrados en una cuenta separada. Es tu red de seguridad para imprevistos." },
-      { title: "La regla del 50/30/20", body: "50% para necesidades (alquiler, comida, transporte), 30% para ocio, 20% para ahorro e inversión. Adáptalo a tu situación." },
-      { title: "Tarjeta de crédito", body: "La tarjeta de crédito no es dinero gratis. Si no pagas el total cada mes, los intereses pueden ser del 20-25% anual." },
-      { title: "Historial crediticio", body: "Pagar a tiempo construye buen historial. Si apareces en ficheros de morosos (ASNEF), te resultará muy difícil conseguir préstamos o alquilar pisos." },
-    ]
-  },
-  {
-    id: "becas", emoji: "🎓", title: "Estudios y Becas", color: "#FFD166", tag: "Educación",
-    related: ["banco", "padron"],
-    steps: [
-      { title: "Beca general del MEC", body: "El Ministerio de Educación convoca cada año la beca general universitaria. Depende de tu renta familiar y tu expediente académico. La convocatoria suele salir en verano." },
-      { title: "¿Cuánto puedo recibir?", body: "La beca tiene varios componentes: cuantía fija por renta, cuantía variable por expediente, exención de matrícula y ayuda al desplazamiento. Puedes recibir desde 300€ hasta más de 6.000€ anuales." },
-      { title: "Becas autonómicas", body: "Además de la beca estatal, muchas CCAA tienen sus propias ayudas: transporte, comedor, material, residencia… Consulta la web de educación de tu comunidad." },
-      { title: "Precio de la matrícula", body: "En universidades públicas el precio varía por CCAA (entre 700€ y 1.500€ aprox. por curso). Si repites asignatura, el precio sube significativamente." },
-      { title: "Préstamos para estudios", body: "El ICO ofrece préstamos para másteres con tipos de interés bajos. Algunas CCAA también tienen líneas de préstamos blandos para estudiantes." },
-    ]
-  },
-  {
-    id: "hipoteca", emoji: "🏗️", title: "Comprar una Vivienda", color: "#EF476F", tag: "Vivienda",
-    related: ["alquiler", "banco", "renta"],
-    steps: [
-      { title: "¿Cuánto necesito ahorrado?", body: "Los bancos financian como máximo el 80% del valor. Necesitas al menos el 20% del precio más un 10-12% extra para gastos. Para un piso de 200.000€, calcula unos 60.000€ mínimo." },
-      { title: "Impuestos al comprar", body: "Vivienda nueva: IVA (10%) + AJD. Segunda mano: ITP (entre el 6% y el 10% según la CCAA). Son gastos que van encima del precio de venta." },
-      { title: "La hipoteca", body: "Compara siempre varias entidades. Fíjate en el TIN y la TAE. Las hipotecas fijas dan seguridad; las variables pueden ser más baratas pero suben con el Euribor." },
-      { title: "Ayudas para jóvenes", body: "El Plan Estatal de Vivienda tiene avales del Estado para menores de 35 años: cubren hasta el 20% adicional sin necesitar ese ahorro propio." },
-      { title: "Gastos anuales post-compra", body: "IBI anual, comunidad de propietarios, seguro de hogar (obligatorio con hipoteca), mantenimiento… Calcula entre 1.500€ y 3.000€ extra al año." },
-    ]
-  },
-  {
-    id: "laboral", emoji: "📝", title: "Contratos y Derechos Laborales", color: "#4CC9F0", tag: "Trabajo",
+    id: "laboral", emoji: "📝", title: "Contratos y Derechos", color: "#4CC9F0", tag: "Trabajo",
     related: ["ss", "nomina", "autonomo"],
     steps: [
       { title: "Tipos de contrato", body: "Indefinido: sin fecha de fin. Temporal: solo para necesidades concretas. Fijo-discontinuo: para trabajos estacionales. Exige siempre que te den copia firmada del contrato." },
@@ -108,7 +76,7 @@ const GUIDES = [
   },
   {
     id: "autonomo", emoji: "🧾", title: "Autónomos y Freelance", color: "#F77F00", tag: "Impuestos",
-    related: ["renta", "ss", "banco"],
+    related: ["renta", "ss", "contenido"],
     steps: [
       { title: "Darte de alta", body: "Debes darte de alta en Hacienda (modelo 036 o 037) y en la Seguridad Social (RETA) antes de empezar a facturar." },
       { title: "La cuota de autónomos", body: "Desde 2023 hay cuotas por tramos de ingresos reales. Si ganas menos de 670€/mes, la cuota mínima es ~230€. La tarifa plana para nuevos autónomos es de 80€/mes el primer año." },
@@ -118,102 +86,25 @@ const GUIDES = [
     ]
   },
   {
-    id: "jubilacion", emoji: "👴", title: "Pensión y Jubilación", color: "#7B9E87", tag: "Finanzas",
-    related: ["ss", "banco", "nomina"],
-    steps: [
-      { title: "¿Cómo funciona el sistema?", body: "En España la pensión pública es de reparto: los trabajadores de hoy pagan las pensiones de los jubilados de hoy. Tu futura pensión depende de cuánto y durante cuánto tiempo hayas cotizado." },
-      { title: "Años cotizados necesarios", body: "Para la pensión completa necesitas 37 años y 3 meses cotizados (en 2025). Con menos años, la pensión se reduce. La edad legal de jubilación es 66 años y 8 meses actualmente." },
-      { title: "Cuánto cobrarás", body: "La pensión se calcula sobre tu base reguladora (media de tus últimas cotizaciones). Con 25 años cotizados cobras el 72,5%; con 37+ años, el 100%. Puedes consultar tu pensión estimada en la web de la SS." },
-      { title: "Ahorro privado", body: "Los planes de pensiones desgravan en la renta (hasta 1.500€/año). También hay fondos de inversión y PPA como alternativas para complementar la pensión pública." },
-      { title: "Empieza cuanto antes", body: "El interés compuesto hace que ahorrar 100€/mes desde los 25 valga mucho más que ahorrar 300€/mes desde los 45. Aunque sea poco, empieza a pensar en el largo plazo." },
-    ]
-  },
-  {
-    id: "nie", emoji: "🛂", title: "Extranjería y NIE", color: "#9B5DE5", tag: "Gestiones",
-    related: ["padron", "ss", "laboral"],
-    steps: [
-      { title: "¿Qué es el NIE?", body: "El NIE (Número de Identidad de Extranjero) es tu identificación fiscal en España si no eres ciudadano español. Lo necesitas para trabajar, abrir cuenta bancaria, alquilar, comprar o cualquier trámite oficial." },
-      { title: "Cómo obtener el NIE", body: "Pide cita en la Comisaría de Policía o Extranjería. Necesitas: formulario EX-15, pasaporte original y copia, foto de carné, justificante del motivo (contrato, matrícula…) y pago de la tasa (modelo 790)." },
-      { title: "Ciudadanos de la UE", body: "Si eres de la UE y vas a residir más de 3 meses, debes registrarte en el Registro Central de Extranjeros. Recibirás un certificado con tu NIE." },
-      { title: "Permisos de residencia", body: "Si no eres de la UE, necesitas un permiso de residencia para estar más de 90 días. Hay varios tipos: por trabajo, reagrupación familiar, estudios, arraigo… Cada uno con requisitos distintos." },
-      { title: "Tarjeta de residencia (TIE)", body: "La TIE es el documento físico que acredita tu situación. Debes renovarla antes de que caduque (suele ser anual los primeros años). No renovarla puede generar problemas legales graves." },
-    ]
-  },
-  {
-    id: "sanidad", emoji: "🩺", title: "Sanidad Pública", color: "#E63946", tag: "Gestiones",
-    related: ["ss", "padron", "laboral"],
-    steps: [
-      { title: "La tarjeta sanitaria", body: "La tarjeta sanitaria individual (TSI) te da acceso a toda la red pública. Si trabajas o cotizas a la SS, la tienes automáticamente. Pídela en el centro de salud de tu zona con el padrón y el número de la SS." },
-      { title: "El médico de cabecera", body: "Es tu puerta de entrada al sistema. Te derivan a especialistas, te dan bajas y recetas. Llama o usa la app de tu comunidad para pedir cita. En urgencias solo ve si realmente es urgente." },
-      { title: "Urgencias vs urgencias reales", body: "Las urgencias del hospital están saturadas. Para problemas menores (fiebre, cortes, esguinces) ve al PAC (Punto de Atención Continuada) o centro de salud. Reserva urgencias para situaciones graves." },
-      { title: "Recetas y medicamentos", body: "Con receta electrónica el médico carga el medicamento en tu historial. El precio en farmacia depende de tu nivel de renta (copago). Activos laborales pagan entre el 40% y el 60%; pensionistas con bajos ingresos, gratis." },
-      { title: "Salud mental pública", body: "Puedes pedir derivación al psicólogo clínico a través de tu médico de cabecera. Las esperas son largas (a veces meses). Muchas CCAA tienen programas específicos para jóvenes con sesiones gratuitas o de bajo coste." },
-    ]
-  },
-  {
-    id: "seguros", emoji: "🛡️", title: "Seguros Básicos", color: "#06D6A0", tag: "Finanzas",
-    related: ["alquiler", "hipoteca", "banco"],
-    steps: [
-      { title: "¿Qué seguro necesito?", body: "No todos los seguros son obligatorios. Los esenciales para empezar: seguro de hogar (obligatorio con hipoteca, muy recomendable en alquiler), seguro de salud (si quieres saltarte listas de espera) y seguro de vida (si tienes hipoteca o dependientes)." },
-      { title: "Seguro de hogar en alquiler", body: "Aunque no es obligatorio al alquilar, protege tus cosas ante robo, incendio o daños. Un seguro básico para inquilino cuesta desde 8-15€/mes. El seguro del propietario cubre el edificio, no tus pertenencias." },
-      { title: "Seguro médico privado", body: "Permite evitar listas de espera y elegir médico. Cuesta entre 40-120€/mes según edad y cobertura. Contrata joven: es más barato y no tienen en cuenta enfermedades previas si entras sano." },
-      { title: "Seguro de coche", body: "El seguro a terceros es obligatorio por ley. El todo riesgo compensa si el coche vale más de 8.000€. Compara precios cada año: la fidelidad no premia, cambiar de compañía sí." },
-      { title: "Cómo ahorrar en seguros", body: "Compara en comparadores online (rastreator, acierto…). Paga anualmente (suele ser más barato que mensual). Sube la franquicia para bajar la prima. Nunca contrates sin leer qué excluye la póliza." },
-    ]
-  },
-  {
-    id: "banca", emoji: "📱", title: "Banca Digital", color: "#4CC9F0", tag: "Finanzas",
-    related: ["banco", "autonomo", "renta"],
-    steps: [
-      { title: "Bancos online vs tradicionales", body: "Los bancos 100% online (Revolut, N26, Wise, Bunq) no tienen oficinas pero ofrecen mejores condiciones: sin comisiones, cambio de divisa a precio real, cashback. Los tradicionales dan más seguridad en trámites complejos (hipotecas, gestiones)." },
-      { title: "Revolut para el día a día", body: "Revolut es muy popular en España para jóvenes: sin comisión en pagos internacionales, cambio de divisa sin recargo, tarjeta virtual para compras online y sistema de cuentas compartidas para gastos con amigos." },
-      { title: "Bizum y pagos instantáneos", body: "Bizum está disponible en casi todos los bancos españoles. Permite enviar hasta 1.000€ por transferencia y hasta 500€ acumulados al día. Es instantáneo y gratuito." },
-      { title: "Seguridad en banca online", body: "Usa contraseñas únicas y activa la autenticación en dos pasos. Nunca hagas banca desde redes wifi públicas sin VPN. Tu banco nunca te pedirá la contraseña completa ni las coordenadas por email o SMS." },
-      { title: "Fintech para ahorrar", body: "Apps como Fintonic o Finary te ayudan a ver todos tus bancos juntos y analizar gastos. Muchos bancos también tienen 'Metas de ahorro' automatizadas. Automatizar el ahorro (transferencia automática el día del sueldo) funciona mejor que ahorrar lo que sobra." },
-    ]
-  },
-  {
-    id: "inversion", emoji: "📈", title: "Invertir desde Cero", color: "#06D6A0", tag: "Finanzas",
-    related: ["banco", "jubilacion", "renta"],
-    steps: [
-      { title: "¿Por qué invertir siendo joven?", body: "El interés compuesto hace que 100€/mes desde los 22 años valgan más que 300€/mes desde los 40. El tiempo es tu mayor ventaja. Dejar el dinero en el banco pierde poder adquisitivo con la inflación." },
-      { title: "Fondos indexados (la opción más sencilla)", body: "Un fondo indexado replica un índice como el S&P 500 o el MSCI World. Sin gestión activa → comisiones muy bajas (~0,2%). Históricamente dan un 7-10% anual de media. Son la opción recomendada para principiantes." },
-      { title: "ETFs vs fondos de inversión", body: "Los ETFs se compran como acciones (en el momento) y tienen traspaso con tributación. Los fondos de inversión permiten traspasar entre fondos sin pagar impuestos hasta que retiras. Para largo plazo, los fondos tienen ventaja fiscal en España." },
-      { title: "Dónde invertir: brokers", body: "MyInvestor, Indexa Capital y Finizens son populares en España para fondos indexados con bajas comisiones. Para ETFs: DEGIRO o Interactive Brokers. Evita bancos tradicionales: sus comisiones se comen la rentabilidad." },
-      { title: "Impuestos sobre inversiones", body: "Las ganancias al vender tributan como rendimientos del capital mobiliario: 19% hasta 6.000€, 21% de 6.000€ a 50.000€, 23% hasta 200.000€ y 27% por encima. Si tienes pérdidas puedes compensarlas con ganancias del mismo año o los 4 siguientes." },
-    ]
-  },
-  {
-    id: "salud_mental", emoji: "🧠", title: "Salud Mental", color: "#9B5DE5", tag: "Bienestar",
-    related: ["laboral", "ss", "becas"],
-    steps: [
-      { title: "Psicólogo público en España", body: "Puedes acceder a psicólogo clínico a través de tu médico de cabecera (derivación). La espera puede ser de meses. Muchas CCAA tienen programas de atención psicológica urgente o para jóvenes con esperas más cortas." },
-      { title: "Baja por salud mental", body: "La ansiedad, la depresión y el burnout dan derecho a baja laboral igual que cualquier enfermedad física. Habla con tu médico con honestidad. El primer día no se cobra; del 4º al 20º lo paga la empresa; después, la SS." },
-      { title: "Opciones de terapia privada", body: "Un psicólogo privado cuesta entre 50-80€/sesión. Hay opciones más asequibles: colegios de psicólogos con escala de precios por renta, asociaciones universitarias, plataformas online (Ifeel, Buencoco) desde 35€/sesión." },
-      { title: "Burnout: qué es y qué hacer", body: "El burnout o síndrome del trabajador quemado es reconocido por la OMS como enfermedad laboral. Síntomas: agotamiento extremo, cinismo hacia el trabajo, baja eficacia. Tienes derecho a baja médica y, si es por causas laborales, puedes reclamarlo." },
-      { title: "Recursos gratuitos", body: "Teléfono de la Esperanza: 717 003 717. Línea de atención a conducta suicida: 024 (gratuita, 24h). Many CCAA tienen líneas de atención psicológica gratuitas. La app Woebot ofrece apoyo cognitivo-conductual basado en IA de forma gratuita." },
-    ]
-  },
-  {
     id: "contenido", emoji: "📲", title: "Creadores de Contenido", color: "#FF6B35", tag: "Trabajo",
-    related: ["autonomo", "renta", "banca"],
+    related: ["autonomo", "renta", "banco"],
     steps: [
       { title: "¿A partir de cuándo declaro?", body: "Cualquier ingreso por contenido (YouTube, Instagram, TikTok, Twitch, Patreon…) debe declararse. No hay mínimo exento. Si superas los 1.000€/año estás obligado a declararlo aunque no te hayan enviado ningún documento." },
-      { title: "Alta como autónomo", body: "Si generas ingresos de forma habitual (no puntual), debes darte de alta en Hacienda (modelo 036) y en el RETA. La tarifa plana de 80€/mes aplica también aquí. Si tus ingresos son muy bajos, consulta si puedes acogerte a la cotización mínima por tramos." },
-      { title: "Cómo tributan los ingresos", body: "YouTube AdSense, sponsorships y donaciones de Twitch: son rendimientos de actividad económica. Tributan en el IRPF y llevan IVA (21%) si el pagador es español. Si es empresa extranjera (Google, Meta…) no llevan IVA pero sí IRPF." },
-      { title: "Gastos deducibles como creador", body: "Cámara, micrófono, ring light, equipo de edición, suscripciones de software (Adobe, Canva Pro), parte proporcional del móvil e internet, formación relacionada, desplazamientos para crear contenido. Guarda siempre facturas." },
-      { title: "Contratos con marcas", body: "Antes de hacer un post de pago, firma siempre un contrato. Que incluya: importe, forma de pago, uso de imagen, exclusividad, número de publicaciones y fecha. La CNMC obliga a etiquetar contenido pagado con #publi o #ad claramente visible." },
+      { title: "Alta como autónomo", body: "Si generas ingresos de forma habitual (no puntual), debes darte de alta en Hacienda (modelo 036) y en el RETA. La tarifa plana de 80€/mes aplica también aquí." },
+      { title: "Cómo tributan los ingresos", body: "YouTube AdSense, sponsorships y donaciones de Twitch son rendimientos de actividad económica. Llevan IVA (21%) si el pagador es español. Si es empresa extranjera (Google, Meta…) no llevan IVA pero sí IRPF." },
+      { title: "Gastos deducibles como creador", body: "Cámara, micrófono, ring light, equipo de edición, suscripciones de software (Adobe, Canva Pro), parte proporcional del móvil e internet, formación relacionada. Guarda siempre facturas." },
+      { title: "Contratos con marcas", body: "Antes de hacer un post de pago, firma siempre un contrato. La CNMC obliga a etiquetar contenido pagado con #publi o #ad claramente visible. Sin etiqueta, puede haber sanción." },
     ]
   },
   {
-    id: "piso_compartido", emoji: "🤝", title: "Piso Compartido", color: "#FFD166", tag: "Vivienda",
-    related: ["alquiler", "padron", "banco"],
+    id: "teletrabajo", emoji: "💻", title: "Teletrabajo", color: "#4CC9F0", tag: "Trabajo",
+    related: ["laboral", "autonomo", "renta"],
     steps: [
-      { title: "Contrato de habitación vs alquiler", body: "Si alquilas solo una habitación, el contrato es de 'arrendamiento de uso distinto al de vivienda'. Tiene menos protecciones que el contrato de vivienda completa: el propietario puede exigirte salir con solo 15-30 días de preaviso según lo firmado." },
-      { title: "La fianza en habitación", body: "Suele ser 1 mes de habitación (a veces 2). No está regulada por ley igual que en vivienda completa, así que lo que firmes en el contrato manda. Haz fotos de tu habitación y zonas comunes al entrar." },
-      { title: "Empadronarte en piso compartido", body: "Puedes empadronarte en cualquier dirección donde residas, aunque sea habitación alquilada. El propietario debe autorizarlo. Si se niega, el ayuntamiento puede hacer una inspección y empadronarte igualmente." },
-      { title: "Convivencia y gastos", body: "Define por escrito desde el primer día: ¿Quién paga los suministros? ¿Cómo se divide la compra? ¿Hay normas de limpieza? Usa Splitwise o Tricount para los gastos compartidos. La mayoría de conflictos entre compis vienen de no haberlo hablado antes." },
-      { title: "Cómo salir del piso", body: "Avisa con el tiempo de preaviso del contrato (normalmente 15-30 días). Haz un inventario de salida. Si el propietario te descontó cosas de la fianza de forma injusta, puedes reclamar por vía civil. Guarda siempre los justificantes de pago." },
+      { title: "Tus derechos en teletrabajo", body: "La Ley de Trabajo a Distancia (2021) dice que si teletrabajas más del 30% del tiempo, la empresa debe firmar un acuerdo contigo, pagar los gastos de conexión y equipamiento, y respetar tu derecho a la desconexión digital." },
+      { title: "Gastos que paga la empresa", body: "La empresa debe compensarte el coste proporcional de internet, electricidad y los equipos necesarios. Si no lo hace, puedes reclamarlo." },
+      { title: "Nómada digital en España", body: "Desde 2023 existe el visado de nómada digital para extranjeros que trabajen remotamente. Para españoles que trabajan para empresas extranjeras: tributas en España si resides más de 183 días al año aquí." },
+      { title: "Desconexión digital: tu derecho", body: "Tienes derecho legal a no contestar mensajes o emails fuera de tu horario laboral. La empresa debe tener una política de desconexión digital por escrito. Si te presionan fuera de horario, es una infracción laboral." },
+      { title: "Deducción como autónomo", body: "Si trabajas desde casa como autónomo, puedes deducir hasta el 30% del IRPF e IVA de suministros (luz, internet) de la parte de la vivienda que uses como despacho." },
     ]
   },
   {
@@ -221,21 +112,65 @@ const GUIDES = [
     related: ["autonomo", "laboral", "ss"],
     steps: [
       { title: "La Ley Rider (2021)", body: "La Ley Rider presume que los repartidores de plataformas (Glovo, Uber Eats, Deliveroo…) son trabajadores por cuenta ajena, no autónomos. Si trabajas en una plataforma y cumples los criterios, tienes derecho a ser contratado como empleado." },
-      { title: "TRADE: autónomo económicamente dependiente", body: "Si más del 75% de tus ingresos vienen de un solo cliente (plataforma), puedes ser un TRADE. Esto te da derechos adicionales: vacaciones, baja por enfermedad con prestación desde el primer día, indemnización por extinción de contrato." },
-      { title: "Cómo reclamar tus derechos", body: "Si crees que eres falso autónomo, puedes denunciar a la Inspección de Trabajo (de forma anónima). También puedes demandar a la plataforma para que te reconozca como trabajador. Organizaciones como Riders x Derechos ofrecen asesoramiento gratuito." },
-      { title: "Economía colaborativa y alquiler", body: "Alquilar tu piso en Airbnb o tu coche puede requerir licencia turística (según ayuntamiento). Los ingresos deben declararse en la renta. Si alquilas por habitaciones, las plataformas están obligadas a comunicar tus ingresos a Hacienda desde 2024." },
-      { title: "Acciones y propinas digitales", body: "Las propinas en Twitch (Bits, suscripciones) o Ko-fi son rendimientos de actividad económica aunque parezcan donaciones. Las opciones de acciones o stock options de startups tributan como rendimiento del trabajo cuando las ejerces." },
+      { title: "TRADE: autónomo económicamente dependiente", body: "Si más del 75% de tus ingresos vienen de un solo cliente, puedes ser un TRADE. Esto te da derechos adicionales: vacaciones, baja desde el primer día e indemnización por extinción de contrato." },
+      { title: "Cómo reclamar tus derechos", body: "Si crees que eres falso autónomo, puedes denunciar a la Inspección de Trabajo de forma anónima. Organizaciones como Riders x Derechos ofrecen asesoramiento gratuito." },
+      { title: "Airbnb y economía colaborativa", body: "Alquilar tu piso en Airbnb puede requerir licencia turística según el ayuntamiento. Los ingresos deben declararse en la renta. Las plataformas están obligadas a comunicar tus ingresos a Hacienda desde 2024." },
+      { title: "Stock options y propinas digitales", body: "Las propinas en Twitch o Ko-fi son rendimientos de actividad económica aunque parezcan donaciones. Las stock options de startups tributan como rendimiento del trabajo cuando las ejerces." },
     ]
   },
   {
-    id: "teletrabajo", emoji: "💻", title: "Teletrabajo y Trabajo Remoto", color: "#4CC9F0", tag: "Trabajo",
-    related: ["laboral", "autonomo", "renta"],
+    id: "banco", emoji: "💳", title: "Finanzas Personales", color: "#06D6A0", tag: "Finanzas",
+    related: ["inversion", "nomina", "alquiler"],
     steps: [
-      { title: "Tus derechos en teletrabajo", body: "La Ley de Trabajo a Distancia (2021) dice que si teletrabajas más del 30% del tiempo, la empresa debe firmar un acuerdo contigo, pagar los gastos de conexión y equipamiento, y respetar tu derecho a la desconexión digital." },
-      { title: "Gastos de teletrabajo", body: "La empresa debe compensarte el coste proporcional de internet, electricidad y los equipos necesarios. Si no lo hace, puedes reclamarlo. Como autónomo puedes deducir hasta el 30% del IRPF e IVA de suministros de tu vivienda habitual si trabajas desde casa." },
-      { title: "Nómada digital en España", body: "Desde 2023 existe el visado de nómada digital para extranjeros que trabajen remotamente. Para españoles que trabajan para empresas extranjeras: tributas en España si resides más de 183 días al año aquí, independientemente de dónde esté tu empresa." },
-      { title: "Régimen Beckham (impatriados)", body: "Si te contratan desde el extranjero para trabajar en España o vuelves tras vivir fuera más de 5 años, puedes optar al régimen de impatriados: tributas al tipo fijo del 24% sobre rentas del trabajo en vez de la escala progresiva, hasta 600.000€/año." },
-      { title: "Desconexión digital: tu derecho", body: "Tienes derecho legal a no contestar mensajes o emails fuera de tu horario laboral. La empresa debe tener una política de desconexión digital por escrito. Si te presionan fuera de horario, es una infracción laboral denunciable a la Inspección de Trabajo." },
+      { title: "Elige bien tu banco", body: "Compara comisiones de mantenimiento, transferencias y cajeros. Los bancos online (Revolut, N26, Wise) suelen tener mejores condiciones para jóvenes: sin comisiones, cambio de divisa a precio real." },
+      { title: "El fondo de emergencia", body: "Intenta tener entre 3 y 6 meses de gastos ahorrados en una cuenta separada. Es tu red de seguridad para imprevistos. Sin fondo de emergencia, cualquier gasto inesperado se convierte en deuda." },
+      { title: "La regla del 50/30/20", body: "50% para necesidades (alquiler, comida, transporte), 30% para ocio, 20% para ahorro e inversión. Adáptalo a tu situación, pero el ahorro siempre va primero." },
+      { title: "Tarjeta de crédito", body: "La tarjeta de crédito no es dinero gratis. Si no pagas el total cada mes, los intereses pueden ser del 20-25% anual. Úsala como herramienta, no como extensión del sueldo." },
+      { title: "Automatiza tu ahorro", body: "Programa una transferencia automática el día que cobres. Ahorrar lo que sobra casi nunca funciona; ahorrar antes de gastar, casi siempre. Apps como Fintonic o Finary te ayudan a controlar gastos." },
+    ]
+  },
+  {
+    id: "inversion", emoji: "📈", title: "Invertir desde Cero", color: "#06D6A0", tag: "Finanzas",
+    related: ["banco", "renta", "autonomo"],
+    steps: [
+      { title: "¿Por qué invertir siendo joven?", body: "El interés compuesto hace que 100€/mes desde los 22 años valgan más que 300€/mes desde los 40. El tiempo es tu mayor ventaja. Dejar el dinero parado en el banco lo hace perder valor con la inflación." },
+      { title: "Fondos indexados: la opción más sencilla", body: "Un fondo indexado replica un índice como el S&P 500 o el MSCI World. Sin gestión activa → comisiones muy bajas (~0,2%). Históricamente dan un 7-10% anual de media. Son la opción recomendada para principiantes." },
+      { title: "ETFs vs fondos de inversión", body: "Los ETFs se compran como acciones y tienen tributación al vender. Los fondos de inversión permiten traspasar entre fondos sin pagar impuestos hasta que retiras, lo que da ventaja fiscal en España para el largo plazo." },
+      { title: "Dónde invertir en España", body: "MyInvestor, Indexa Capital y Finizens son opciones populares con bajas comisiones. Para ETFs: DEGIRO o Interactive Brokers. Evita bancos tradicionales: sus comisiones se comen la rentabilidad." },
+      { title: "Impuestos sobre inversiones", body: "Las ganancias tributan como rendimientos del capital mobiliario: 19% hasta 6.000€, 21% hasta 50.000€, 23% hasta 200.000€ y 27% por encima. Si tienes pérdidas, puedes compensarlas con ganancias de los 4 años siguientes." },
+    ]
+  },
+  {
+    id: "becas", emoji: "🎓", title: "Estudios y Becas", color: "#FFD166", tag: "Educación",
+    related: ["banco", "ss", "salud_mental"],
+    steps: [
+      { title: "Beca general del MEC", body: "El Ministerio de Educación convoca cada año la beca general universitaria. Depende de tu renta familiar y tu expediente académico. La convocatoria suele salir en verano." },
+      { title: "¿Cuánto puedo recibir?", body: "La beca tiene varios componentes: cuantía fija por renta, cuantía variable por expediente, exención de matrícula y ayuda al desplazamiento. Puedes recibir desde 300€ hasta más de 6.000€ anuales." },
+      { title: "Becas autonómicas", body: "Además de la beca estatal, muchas CCAA tienen sus propias ayudas: transporte, comedor, material, residencia… Consulta la web de educación de tu comunidad." },
+      { title: "Precio de la matrícula", body: "En universidades públicas el precio varía por CCAA (entre 700€ y 1.500€ aprox. por curso). Si repites asignatura, el precio sube significativamente." },
+      { title: "Préstamos para estudios", body: "El ICO ofrece préstamos para másteres con tipos de interés bajos. Algunas CCAA también tienen líneas de préstamos blandos para estudiantes." },
+    ]
+  },
+  {
+    id: "salud_mental", emoji: "🧠", title: "Salud Mental", color: "#9B5DE5", tag: "Bienestar",
+    related: ["laboral", "ss", "becas"],
+    steps: [
+      { title: "Psicólogo público en España", body: "Puedes acceder a psicólogo clínico a través de tu médico de cabecera (derivación). La espera puede ser de meses. Muchas CCAA tienen programas de atención psicológica para jóvenes con esperas más cortas." },
+      { title: "Baja por salud mental", body: "La ansiedad, la depresión y el burnout dan derecho a baja laboral igual que cualquier enfermedad física. Habla con tu médico con honestidad. El primer día no se cobra; del 4º al 20º lo paga la empresa; después, la SS." },
+      { title: "Opciones de terapia privada", body: "Un psicólogo privado cuesta entre 50-80€/sesión. Hay opciones más asequibles: colegios de psicólogos con escala por renta, plataformas online (Ifeel, Buencoco) desde 35€/sesión." },
+      { title: "Burnout: qué es y qué hacer", body: "El burnout es reconocido por la OMS como enfermedad laboral. Síntomas: agotamiento extremo, cinismo hacia el trabajo, baja eficacia. Tienes derecho a baja médica y a reclamarlo si es por causas laborales." },
+      { title: "Recursos gratuitos", body: "Teléfono de la Esperanza: 717 003 717. Línea de atención a la conducta suicida: 024 (gratuita, 24h). Muchas CCAA tienen líneas de atención psicológica gratuitas para jóvenes." },
+    ]
+  },
+  {
+    id: "sanidad", emoji: "🩺", title: "Sanidad Pública", color: "#E63946", tag: "Gestiones",
+    related: ["ss", "laboral", "salud_mental"],
+    steps: [
+      { title: "La tarjeta sanitaria", body: "La tarjeta sanitaria individual (TSI) te da acceso a toda la red pública. Si trabajas o cotizas a la SS, la tienes automáticamente. Pídela en el centro de salud de tu zona con el número de la SS." },
+      { title: "El médico de cabecera", body: "Es tu puerta de entrada al sistema. Te derivan a especialistas, te dan bajas y recetas. Llama o usa la app de tu comunidad para pedir cita. En urgencias solo ve si realmente es urgente." },
+      { title: "Urgencias vs urgencias reales", body: "Las urgencias del hospital están saturadas. Para problemas menores (fiebre, cortes, esguinces) ve al PAC (Punto de Atención Continuada) o centro de salud. Reserva urgencias para situaciones graves." },
+      { title: "Recetas y medicamentos", body: "Con receta electrónica el médico carga el medicamento en tu historial. El precio en farmacia depende de tu nivel de renta (copago). Activos laborales pagan entre el 40% y el 60%." },
+      { title: "Salud mental pública", body: "Puedes pedir derivación al psicólogo clínico a través de tu médico de cabecera. Muchas CCAA tienen programas específicos para jóvenes con sesiones gratuitas o de bajo coste." },
     ]
   },
 ];
@@ -244,27 +179,17 @@ const TIPS = [
   "💡 Pide siempre copia firmada de tu contrato el mismo día que lo firmes.",
   "💡 La declaración de la renta tiene plazo hasta el 30 de junio — no la dejes para el último día.",
   "💡 Guarda todas tus nóminas en una carpeta digital. Las necesitarás para pedir el paro.",
-  "💡 Si te cambian de domicilio, actualiza el padrón en menos de 3 meses para evitar problemas.",
   "💡 El fondo de emergencia debería cubrir al menos 3 meses de tus gastos fijos.",
   "💡 Como autónomo nuevo, tienes tarifa plana de 80€/mes el primer año en la SS.",
-  "💡 Revisa tu vida laboral al menos una vez al año para detectar errores de cotización.",
   "💡 Antes de firmar un alquiler, haz fotos de cada habitación y envíalas por email al propietario.",
-  "💡 El seguro del móvil o la garantía extendida casi nunca compensan. Ahorra ese dinero.",
-  "💡 Puedes pedir cita en la Inspección de Trabajo de forma anónima si tu empresa no cumple la ley.",
-  "💡 La cuenta nómina no tiene por qué ser tu banco principal — compara condiciones.",
-  "💡 El plazo para reclamar el finiquito caduca a los 12 meses. No esperes.",
   "💡 El alquiler no debe superar el 30% de tu sueldo neto para que el presupuesto sea sostenible.",
-  "💡 Compara siempre al menos 3 entidades antes de pedir una hipoteca.",
-  "💡 Activa la autenticación en dos pasos en tu banco. Es el mejor seguro contra fraude digital.",
-  "💡 Si tienes 200€ al mes de margen, una transferencia automática a ahorro el día del sueldo evita gastarlo sin darte cuenta.",
-  "💡 Cualquier trabajador puede consultar su convenio colectivo gratis en el BOE.",
+  "💡 Puedes pedir cita en la Inspección de Trabajo de forma anónima si tu empresa no cumple la ley.",
   "💡 Si haces contenido pagado con marcas, etiquétalo siempre con #publi o #ad. Es obligatorio por ley.",
-  "💡 Los fondos indexados (MSCI World, S&P 500) son la forma más sencilla de invertir a largo plazo para principiantes.",
-  "💡 Puedes teletrabajar desde cualquier sitio de España, pero si lo haces más del 30% del tiempo, tu empresa debe firmarte un acuerdo.",
-  "💡 Si eres rider o trabajas en plataformas, tienes derecho a ser contratado como empleado gracias a la Ley Rider.",
-  "💡 La baja por ansiedad o depresión es exactamente igual que la de cualquier otra enfermedad. Habla con tu médico.",
-  "💡 Las ganancias de criptomonedas también tributan. Debes declararlas aunque no hayas retirado a euros.",
+  "💡 Los fondos indexados (MSCI World, S&P 500) son la forma más sencilla de invertir para principiantes.",
+  "💡 La baja por ansiedad o depresión es igual que cualquier otra enfermedad. Habla con tu médico.",
   "💡 Ingresos de Twitch, YouTube o Patreon son actividad económica. Si superan 1.000€/año debes declararlos.",
+  "💡 Las ganancias de criptomonedas tributan aunque no hayas retirado a euros.",
+  "💡 Si teletrabajas más del 30% del tiempo, tu empresa está obligada a firmarte un acuerdo de teletrabajo.",
 ];
 
 // --- Utilidades IRPF / SS ---
@@ -1035,6 +960,105 @@ function ChatView({ comunidad, apiKey, onNeedKey }) {
   );
 }
 
+// --- Footer ---
+const SOURCES = [
+  {
+    category: "Impuestos y Hacienda",
+    links: [
+      { label: "Agencia Tributaria (AEAT)", url: "https://www.agenciatributaria.gob.es" },
+      { label: "Sede electrónica AEAT", url: "https://sede.agenciatributaria.gob.es" },
+    ],
+  },
+  {
+    category: "Trabajo y empleo",
+    links: [
+      { label: "SEPE — Servicio Público de Empleo", url: "https://www.sepe.es" },
+      { label: "Inspección de Trabajo", url: "https://www.mites.gob.es/itss/web/index.html" },
+      { label: "Ministerio de Trabajo", url: "https://www.mites.gob.es" },
+    ],
+  },
+  {
+    category: "Seguridad Social",
+    links: [
+      { label: "Seguridad Social", url: "https://www.seg-social.es" },
+      { label: "Sede electrónica SS", url: "https://sede.seg-social.gob.es" },
+    ],
+  },
+  {
+    category: "Educación y becas",
+    links: [
+      { label: "Ministerio de Educación", url: "https://www.educacion.gob.es" },
+      { label: "Becas MEC", url: "https://www.becaseducacion.gob.es" },
+    ],
+  },
+  {
+    category: "Vivienda",
+    links: [
+      { label: "Ministerio de Vivienda", url: "https://www.mivau.gob.es" },
+    ],
+  },
+  {
+    category: "Finanzas e inversión",
+    links: [
+      { label: "Banco de España", url: "https://www.bde.es" },
+      { label: "CNMV — Comisión Nacional del Mercado de Valores", url: "https://www.cnmv.es" },
+    ],
+  },
+  {
+    category: "Legislación",
+    links: [
+      { label: "BOE — Boletín Oficial del Estado", url: "https://www.boe.es" },
+    ],
+  },
+];
+
+function Footer() {
+  const [open, setOpen] = useState(false);
+  return (
+    <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", marginTop: "48px", paddingTop: "32px", paddingBottom: "32px" }}>
+      <button onClick={() => setOpen(o => !o)}
+        style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: "8px", marginBottom: open ? "24px" : "0", padding: 0, fontFamily: "inherit" }}>
+        <span style={{ fontSize: "11px", fontWeight: "700", letterSpacing: "2px", color: "#555", textTransform: "uppercase" }}>Fuentes oficiales</span>
+        <span style={{ color: "#444", fontSize: "12px", transition: "transform 0.2s", display: "inline-block", transform: open ? "rotate(180deg)" : "rotate(0)" }}>▾</span>
+      </button>
+
+      {open && (
+        <div style={{ animation: "fadeIn 0.2s ease" }}>
+          <p style={{ margin: "0 0 20px", fontSize: "13px", color: "#555", lineHeight: 1.6 }}>
+            La información de esta app es orientativa. Consulta siempre las fuentes oficiales para verificar datos actualizados o tomar decisiones importantes.
+          </p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: "16px" }}>
+            {SOURCES.map(section => (
+              <div key={section.category}>
+                <div style={{ fontSize: "11px", fontWeight: "700", letterSpacing: "1px", color: "#FF6B35", textTransform: "uppercase", marginBottom: "8px" }}>{section.category}</div>
+                <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
+                  {section.links.map(link => (
+                    <a key={link.url} href={link.url} target="_blank" rel="noopener noreferrer"
+                      style={{ fontSize: "13px", color: "#888", textDecoration: "none", transition: "color 0.15s" }}
+                      onMouseEnter={e => e.target.style.color = "#fff"}
+                      onMouseLeave={e => e.target.style.color = "#888"}>
+                      {link.label} ↗
+                    </a>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+          <p style={{ margin: "24px 0 0", fontSize: "11px", color: "#333", textAlign: "center" }}>
+            Espabila · Hecho con ❤️ para la Gen Z española
+          </p>
+        </div>
+      )}
+
+      {!open && (
+        <p style={{ margin: "8px 0 0", fontSize: "11px", color: "#333" }}>
+          Información orientativa · Verifica siempre en las fuentes oficiales
+        </p>
+      )}
+    </div>
+  );
+}
+
 // --- App principal ---
 export default function App() {
   const [tab, setTab] = useState("guias");
@@ -1102,7 +1126,7 @@ export default function App() {
 
       {showApiModal && <ApiKeyModal onSave={saveApiKey} onClose={() => setShowApiModal(false)} />}
 
-      <div style={{ maxWidth: "680px", margin: "0 auto", padding: "32px 20px 100px" }}>
+      <div style={{ maxWidth: "680px", margin: "0 auto", padding: "32px 20px 48px" }}>
 
         {/* Header */}
         <div style={{ marginBottom: "28px", animation: "fadeIn 0.4s ease" }}>
@@ -1213,6 +1237,8 @@ export default function App() {
             <ChatView comunidad={comunidad} apiKey={apiKey} onNeedKey={() => setShowApiModal(true)} />
           </div>
         )}
+
+        <Footer />
       </div>
     </div>
   );
